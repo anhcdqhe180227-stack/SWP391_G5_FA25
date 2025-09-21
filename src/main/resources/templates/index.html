@@ -31,10 +31,19 @@
         <a href="#contact">contact</a>
     </nav>
 
-    <div id="login-btn">
-        <button class="btn">login</button>
-        <i class="far fa-user"></i>
-    </div>
+    <th:block th:unless="${#authorization.expression('isAnonymous()')}">
+        <div id="login-btn">
+            <a class="btn">Đăng xuất</a>
+            <i class="far fa-user"></i>
+        </div>
+    </th:block>
+
+    <th:block th:if="${#authorization.expression('isAnonymous()')}">
+        <div id="login-btn">
+            <button class="btn">Đăng nhập</button>
+            <i class="far fa-user"></i>
+        </div>
+    </th:block>
 
 </header> 
     
@@ -42,18 +51,19 @@
 
     <span id="close-login-form" class="fas fa-times"></span>
 
-    <form action="">
-        <h3>user login</h3>
-        <input type="email" placeholder="email" class="box">
-        <input type="password" placeholder="password" class="box">
-        <p> forget your password <a href="#">click here</a> </p>
-        <input type="submit" value="login" class="btn">
-        <p>or login with</p>
-        <div class="buttons">
-            <a href="#" class="btn"> google </a>
-            <a href="#" class="btn"> facebook </a>
+    <form th:action="@{/login}" method="post">
+        <h3>Đăng nhập</h3>
+
+        <div th:if="${param.error}">
+            <div class="alert alert-danger" th:text="${param.message}">Thông báo lỗi đăng nhập</div>
         </div>
-        <p> don't have an account <a href="#">create one</a> </p>
+
+        <input type="email" name="email" placeholder="email" class="box">
+        <input type="password" name="password" placeholder="password" class="box">
+        <p> forget your password <a href="#">click here</a></p>
+        <input type="submit" value="login" class="btn">
+
+        <p> don't have an account <a href="#">create one</a></p>
     </form>
 
 </div>
