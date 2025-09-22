@@ -31,6 +31,70 @@
 
     <!-- Template Stylesheet -->
     <link th:href="@{/assets/css/style.css}" rel="stylesheet">
+
+    <style>
+        .error-message {
+           color: #dc3545;
+           font-size: 12px;
+           margin-top: -10px;
+           margin-bottom: 10px;
+           display: none;
+       }
+
+       .password-container {
+           position: relative;
+           width: 100%;
+       }
+
+       .password-container input {
+           padding-right: 40px;
+       }
+
+       .password-container .toggle-password {
+           position: absolute;
+           right: 12px;
+           top: 50%;
+           transform: translateY(-100%);
+           cursor: pointer;
+           font-size: 12px;
+           color: #6c757d;
+       }
+
+       .password-container .toggle-password:hover {
+           color: #007bff;
+       }
+       .custom-alert {
+           background-color: #f8d7da;
+           color: #721c24;
+           font-style: italic;
+           font-size: 16px;
+           margin-bottom: 15px;
+           padding: 10px;
+           border-radius: 8px;
+           text-align: center;
+           border: none;
+           box-shadow: none;
+       }
+
+.form-floating {
+    position: relative;
+}
+
+.form-floating .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.form-floating .toggle-password:hover {
+    color: #000;
+}
+
+    </style>
 </head>
 
 <body>
@@ -49,19 +113,30 @@
                     </div>
                     <div class="col-md-6">
                         <div class="wow fadeInUp" data-wow-delay="0.2s">
-                            <form>
+                            <form th:action="@{/login}" method="post">
+
+                                <div th:if="${param.error}">
+                                    <div class="alert alert-danger" th:text="${param.message}">Thông báo lỗi đăng nhập</div>
+                                </div>
+
                                 <div class="row g-3">
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="email" placeholder="Email">
+                                            <input type="text" class="form-control" id="email" name="email" placeholder="Email">
                                             <label for="email">Email</label>
+
+                                            <div class="error-message" id="email-error">Email không hợp lệ. Vui lòng nhập đúng định dạng email
+                                                (bao gồm @).
+                                            </div>
+
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="password" class="form-control" id="password"
+                                            <input type="password" class="form-control" id="password" name="password"
                                                    placeholder="Mật khẩu">
+                                            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
                                             <label for="password">Mật khẩu</label>
                                         </div>
                                     </div>
@@ -94,6 +169,49 @@
 
 <!-- Template Javascript -->
 <script th:src="@{/assets/js/main.js}"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const emailInput = document.querySelector("input[name='email']");
+        const emailError = document.querySelector("#email-error");
+        const passwordInput = document.querySelector("#password");
+        const togglePassword = document.querySelector("#togglePassword");
+
+        emailInput.addEventListener("input", function () {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailValue = emailInput.value.trim();
+
+            if (!emailRegex.test(emailValue)) {
+                emailError.style.display = "block";
+            } else {
+                emailError.style.display = "none";
+            }
+        });
+
+        togglePassword.addEventListener("click", function () {
+            const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+            passwordInput.setAttribute("type", type);
+            this.classList.toggle("fa-eye");
+            this.classList.toggle("fa-eye-slash");
+        });
+
+        form.addEventListener("submit", function (event) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailValue = emailInput.value.trim();
+
+            if (!emailRegex.test(emailValue)) {
+                event.preventDefault();
+                emailError.style.display = "block";
+                emailInput.focus();
+                return;
+            } else {
+                emailError.style.display = "none";
+            }
+        });
+    });
+</script>
+
 </body>
 
 </html>

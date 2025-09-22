@@ -38,6 +38,7 @@ public class HomeController {
         return indexHome(model);
     }
 
+
     @GetMapping("/index")
     public String index(Model model) {
         return indexHome(model);
