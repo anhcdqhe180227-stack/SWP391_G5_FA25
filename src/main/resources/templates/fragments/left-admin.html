@@ -1,4 +1,4 @@
-<th:block th:fragment="left">
+<th:block th:fragment="left" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="left-side-bar">
         <div class="brand-logo">
             <a th:href="@{/admin/dashboard}">
@@ -20,21 +20,11 @@
 
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-people"></span><span class="mtext">Khách hàng</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a th:href="@{/voucher/list}">Danh sách</a></li>
-                            <li><a th:href="@{/voucher/add}">Thêm</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
                             <span class="micon bi bi-person-badge"></span><span class="mtext">Nhân viên</span>
                         </a>
                         <ul class="submenu">
-                            <li><a th:href="@{/voucher/list}">Danh sách</a></li>
-                            <li><a th:href="@{/voucher/add}">Thêm</a></li>
+                            <li><a th:href="@{/admin/employee/list}">Danh sách</a></li>
+                            <li><a th:href="@{/admin/employee/add}">Thêm</a></li>
                         </ul>
                     </li>
 
