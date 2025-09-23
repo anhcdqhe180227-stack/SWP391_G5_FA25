@@ -4,6 +4,7 @@ package com.swp.carcare.controller.auth;
 import com.swp.carcare.repository.OwnerRepository;
 import com.swp.carcare.service.EmailSenderService;
 import com.swp.carcare.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,7 +24,8 @@ public class AuthController {
     @Autowired
     private OwnerRepository ownerRepository;
     @GetMapping("/login")
-    public String showLogin() {
+    public String showLogin(Model model, HttpServletRequest request) {
+        model.addAttribute("currentUri", request.getRequestURI());
         return "auth/login";
     }
 

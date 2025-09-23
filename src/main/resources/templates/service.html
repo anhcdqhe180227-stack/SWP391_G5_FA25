@@ -35,121 +35,22 @@
 
 <body>
 
-<!-- Registration Success Modal -->
-<div class="modal fade registration-modal" id="registrationSuccessModal" tabindex="-1" role="dialog"
-     aria-labelledby="registrationModalLabel" aria-hidden="true" th:if="${registrationSuccess}">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="registrationModalLabel">
-                    <i class="fas fa-check-circle mr-2"></i>Tạo tài khoản chủ xe thành công!
-                </h5>
-            </div>
-            <div class="modal-body">
-                <div class="success-note">
-                    <i class="fas fa-info-circle mr-1"></i>
-                    Tài khoản của bạn đã được tạo thành công. Vui lòng lưu lại thông tin bên dưới.
-                </div>
-
-                <div class="user-info">
-                    <div class="info-row">
-                        <span class="info-label">Họ tên chủ xe:</span>
-                        <span class="info-value" th:text="${userFullName}">Nguyễn Trang</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">SĐT:</span>
-                        <span class="info-value" th:text="${userPhone}">0987666111</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Email:</span>
-                        <span class="info-value" th:text="${userEmail}">user@gmail.com</span>
-                    </div>
-
-                    <div class="info-row">
-                        <span class="info-label">Giới tính:</span>
-                        <span class="info-value" th:text="${userGender}">Nam</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Địa chỉ:</span>
-                        <span class="info-value" th:text="${userAddress}">Tphcm</span>
-                    </div>
-                </div>
-
-                <div class="success-note">
-                    <i class="fas fa-exclamation-triangle mr-1"></i>
-                    <strong>Lưu ý:</strong> Bạn có thể đăng nhập vào hệ thống bằng email và mật khẩu đã đăng ký.
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a th:href="@{/}" class="btn btn-primary">Quay về trang chủ</a>
-            </div>
-        </div>
-    </div>
-</div>
 <th:block th:replace="layout/user-layout :: layout">
     <th:block th:fragment="pageContent">
-        <div class="container-fluid p-0 mb-5">
-            <div id="header-carousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="w-100" th:src="@{/assets/img/carousel-bg-1.jpg}" alt="Image">
-                        <div class="carousel-caption d-flex align-items-center">
-                            <div class="container">
-                                <div class="row align-items-center justify-content-center justify-content-lg-start">
-                                    <div class="col-10 col-lg-7 text-center text-lg-start">
-                                        <h6 class="text-white text-uppercase mb-3 animated slideInDown">// Dịch Vụ Ô Tô
-                                            //</h6>
-                                        <h1 class="display-3 text-white mb-4 pb-3 animated slideInDown">Trung Tâm Sửa
-                                            Chữa Ô Tô
-                                            Chuyên Nghiệp</h1>
-                                        <a href="" class="btn btn-primary py-3 px-5 animated slideInDown">Tìm Hiểu
-                                            Thêm<i
-                                                    class="fa fa-arrow-right ms-3"></i></a>
-                                    </div>
-                                    <div class="col-lg-5 d-none d-lg-flex animated zoomIn">
-                                        <img class="img-fluid" th:src="@{/assets/img/carousel-1.png}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <img class="w-100" th:src="@{/assets/img/carousel-bg-2.jpg}" alt="Image">
-                        <div class="carousel-caption d-flex align-items-center">
-                            <div class="container">
-                                <div class="row align-items-center justify-content-center justify-content-lg-start">
-                                    <div class="col-10 col-lg-7 text-center text-lg-start">
-                                        <h6 class="text-white text-uppercase mb-3 animated slideInDown">// Dịch Vụ Rửa
-                                            Xe //</h6>
-                                        <h1 class="display-3 text-white mb-4 pb-3 animated slideInDown">Trung Tâm Rửa Xe
-                                            Chuyên
-                                            Nghiệp</h1>
-                                        <a href="" class="btn btn-primary py-3 px-5 animated slideInDown">Tìm Hiểu
-                                            Thêm<i
-                                                    class="fa fa-arrow-right ms-3"></i></a>
-                                    </div>
-                                    <div class="col-lg-5 d-none d-lg-flex animated zoomIn">
-                                        <img class="img-fluid" th:src="@{/assets/img/carousel-2.png}" alt="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+        <div class="container-fluid page-header mb-5 p-0" style="background-image: url(assets/img/carousel-bg-2.jpg);">
+            <div class="container-fluid page-header-inner py-5">
+                <div class="container text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Dịch vụ</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Dịch vụ</li>
+                        </ol>
+                    </nav>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel"
-                        data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Trước</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#header-carousel"
-                        data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Sau</span>
-                </button>
             </div>
         </div>
-        <!-- Carousel End -->
-
 
         <!-- Dịch Vụ Bắt Đầu -->
         <div class="container-xxl py-5">
@@ -191,98 +92,6 @@
         <!-- Dịch Vụ Kết Thúc -->
 
 
-        <!-- Giới Thiệu Bắt Đầu -->
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="row g-5">
-                    <div class="col-lg-6 pt-4" style="min-height: 400px;">
-                        <div class="position-relative h-100 wow fadeIn" data-wow-delay="0.1s">
-                            <img class="position-absolute img-fluid w-100 h-100" th:src="@{/assets/img/about.jpg}"
-                                 style="object-fit: cover;" alt="">
-                            <div class="position-absolute top-0 end-0 mt-n4 me-n4 py-4 px-5"
-                                 style="background: rgba(0, 0, 0, .08);">
-                                <h1 class="display-4 text-white mb-0">15 <span class="fs-4">Năm</span></h1>
-                                <h4 class="text-white">Kinh Nghiệm</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6">
-                        <h6 class="text-primary text-uppercase">// Về Chúng Tôi //</h6>
-                        <h1 class="mb-4"><span class="text-primary">CarCare</span> Là Nơi Tốt Nhất Cho Chăm Sóc Xe Của Bạn</h1>
-                        <p class="mb-4">Với hơn 15 năm kinh nghiệm trong ngành sửa chữa và bảo dưỡng ô tô, chúng tôi cam kết mang đến cho khách hàng những dịch vụ chất lượng nhất. Đội ngũ kỹ thuật viên của chúng tôi được đào tạo chuyên sâu và sử dụng các trang thiết bị hiện đại nhất để đảm bảo hiệu quả tối ưu cho mỗi dịch vụ.</p>
-                        <div class="row g-4 mb-3 pb-3">
-                            <div class="col-12 wow fadeIn" data-wow-delay="0.1s">
-                                <div class="d-flex">
-                                    <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                         style="width: 45px; height: 45px;">
-                                        <span class="fw-bold text-secondary">01</span>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>Chuyên Nghiệp & Kinh Nghiệm</h6>
-                                        <span>Đội ngũ kỹ thuật viên với hơn 15 năm kinh nghiệm trong ngành ô tô.</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 wow fadeIn" data-wow-delay="0.3s">
-                                <div class="d-flex">
-                                    <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                         style="width: 45px; height: 45px;">
-                                        <span class="fw-bold text-secondary">02</span>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>Trung Tâm Dịch Vụ Chất Lượng</h6>
-                                        <span>Cung cấp dịch vụ sửa chữa và bảo dưỡng ô tô với chất lượng cao, hiệu quả lâu dài.</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 wow fadeIn" data-wow-delay="0.5s">
-                                <div class="d-flex">
-                                    <div class="bg-light d-flex flex-shrink-0 align-items-center justify-content-center mt-1"
-                                         style="width: 45px; height: 45px;">
-                                        <span class="fw-bold text-secondary">03</span>
-                                    </div>
-                                    <div class="ps-3">
-                                        <h6>Những Kỹ Thuật Viên Được Tôn Vinh</h6>
-                                        <span>Đội ngũ kỹ thuật viên xuất sắc, đã đạt được nhiều giải thưởng trong ngành ô tô.</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <a href="" class="btn btn-primary py-3 px-5">Tìm Hiểu Thêm<i class="fa fa-arrow-right ms-3"></i></a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Giới Thiệu Kết Thúc -->
-
-        <!-- Fact Start -->
-        <div class="container-fluid fact bg-dark my-5 py-5">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.1s">
-                        <i class="fa fa-check fa-2x text-white mb-3"></i>
-                        <h2 class="text-white mb-2" data-toggle="counter-up">12</h2>
-                        <p class="text-white mb-0">Số năm kinh nghiệm</p>
-                    </div>
-                    <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.3s">
-                        <i class="fa fa-users-cog fa-2x text-white mb-3"></i>
-                        <h2 class="text-white mb-2" data-toggle="counter-up">55</h2>
-                        <p class="text-white mb-0">Kỹ thuật viên kinh nghiệm</p>
-                    </div>
-                    <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.5s">
-                        <i class="fa fa-users fa-2x text-white mb-3"></i>
-                        <h2 class="text-white mb-2" data-toggle="counter-up">434</h2>
-                        <p class="text-white mb-0">Khách hàng hài lòng</p>
-                    </div>
-                    <div class="col-md-6 col-lg-3 text-center wow fadeIn" data-wow-delay="0.7s">
-                        <i class="fa fa-car fa-2x text-white mb-3"></i>
-                        <h2 class="text-white mb-2" data-toggle="counter-up">123</h2>
-                        <p class="text-white mb-0">Dự án hoàn thành</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Fact End -->
 
 
         <!-- Service Start -->
@@ -496,83 +305,6 @@
         </div>
         <!-- Booking End -->
 
-
-        <div class="container-xxl py-5">
-            <div class="container">
-                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                    <h6 class="text-primary text-uppercase">// Kỹ Thuật Viên Của Chúng Tôi //</h6>
-                    <h1 class="mb-5">Các Kỹ Thuật Viên Chuyên Gia Của Chúng Tôi</h1>
-                </div>
-                <div class="row g-4">
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="team-item">
-                            <div class="position-relative overflow-hidden">
-                                <img class="img-fluid" th:src="@{/assets/img/team-1.jpg}" alt="">
-                                <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="bg-light text-center p-4">
-                                <h5 class="fw-bold mb-0">Nguyễn Văn A</h5>
-                                <small>Kỹ thuật viên</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
-                        <div class="team-item">
-                            <div class="position-relative overflow-hidden">
-                                <img class="img-fluid" th:src="@{/assets/img/team-2.jpg}" alt="">
-                                <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="bg-light text-center p-4">
-                                <h5 class="fw-bold mb-0">Trần Thị B</h5>
-                                <small>Kỹ thuật viên</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
-                        <div class="team-item">
-                            <div class="position-relative overflow-hidden">
-                                <img class="img-fluid" th:src="@{/assets/img/team-3.jpg}" alt="">
-                                <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="bg-light text-center p-4">
-                                <h5 class="fw-bold mb-0">Lê Minh C</h5>
-                                <small>Kỹ thuật viên</small>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-md-6 wow fadeInUp" data-wow-delay="0.7s">
-                        <div class="team-item">
-                            <div class="position-relative overflow-hidden">
-                                <img class="img-fluid" th:src="@{/assets/img/team-4.jpg}" alt="">
-                                <div class="team-overlay position-absolute start-0 top-0 w-100 h-100">
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-facebook-f"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-twitter"></i></a>
-                                    <a class="btn btn-square mx-1" href=""><i class="fab fa-instagram"></i></a>
-                                </div>
-                            </div>
-                            <div class="bg-light text-center p-4">
-                                <h5 class="fw-bold mb-0">Phạm Ngọc D</h5>
-                                <small>Kỹ thuật viên</small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Team End -->
     </th:block>
 </th:block>
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
