@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>CarServ - Car Repair HTML Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+    <link th:href="@{/assets/img/favicon.ico}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@600;700&family=Ubuntu:wght@400;500&display=swap"
+          rel="stylesheet">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link th:href="@{/assets/lib/animate/animate.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/lib/owlcarousel/assets/owl.carousel.min.css}" rel="stylesheet">
+    <link th:href="@{/assets/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css}" rel="stylesheet"/>
+
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
+
+    <link th:href="@{/assets/css/style.css}" rel="stylesheet">
+
+    <style>
+        .error-message {
+           color: #dc3545;
+           font-size: 12px;
+           margin-top: -10px;
+           margin-bottom: 10px;
+           display: none;
+       }
+
+       .password-container {
+           position: relative;
+           width: 100%;
+       }
+
+       .password-container input {
+           padding-right: 40px;
+       }
+
+       .password-container .toggle-password {
+           position: absolute;
+           right: 12px;
+           top: 50%;
+           transform: translateY(-100%);
+           cursor: pointer;
+           font-size: 12px;
+           color: #6c757d;
+       }
+
+       .password-container .toggle-password:hover {
+           color: #007bff;
+       }
+       .custom-alert {
+           background-color: #f8d7da;
+           color: #721c24;
+           font-style: italic;
+           font-size: 16px;
+           margin-bottom: 15px;
+           padding: 10px;
+           border-radius: 8px;
+           text-align: center;
+           border: none;
+           box-shadow: none;
+       }
+
+.form-floating {
+    position: relative;
+}
+
+.form-floating .toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #6c757d;
+    font-size: 1.1rem;
+}
+
+.form-floating .toggle-password:hover {
+    color: #000;
+}
+
+    </style>
+</head>
+
+<body>
+<th:block th:replace="layout/user-layout :: layout">
+    <th:block th:fragment="pageContent">
+        <div class="container-xxl py-5">
+            <div class="container">
+                <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                    <h1 class="mb-5">Đăng ký tài khoản</h1>
+                </div>
+                <div class="row g-4">
+                    <div class="col-md-6 wow fadeIn" data-wow-delay="0.1s">
+                        <img class="position-relative rounded w-100 h-100"
+                             src="https://5kcarcare.com/wp-content/uploads/2024/11/6-useful-summer-car-care-tips.jpg"
+                             style="min-height: 350px; border:0;" aria-hidden="false" tabindex="0"/>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="wow fadeInUp" data-wow-delay="0.2s">
+                            <form th:action="@{/save}" method="post">
+
+                                <div class="alert alert-danger text-center" th:if="${mess}" th:text="${mess}"></div>
+
+                                <div class="row g-3">
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Họ" required>
+                                            <label for="firstName">Họ</label>
+                                            <div id="firstNameError" class="text-danger"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Tên" required>
+                                            <label for="lastName">Tên</label>
+                                            <div id="lastNameError" class="text-danger"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại" required>
+                                            <label for="phone">Số điện thoại</label>
+                                            <div id="phoneError" class="text-danger"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="address" name="address" placeholder="Địa chỉ" required>
+                                            <label for="address">Địa chỉ</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <select class="form-select" id="gender" name="gender" required>
+                                                <option value="">Chọn giới tính</option>
+                                                <option value="male">Nam</option>
+                                                <option value="female">Nữ</option>
+                                                <option value="other">Khác</option>
+                                            </select>
+                                            <label for="gender">Giới tính</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                            <label for="email">Email</label>
+                                            <div id="emailError" class="text-danger"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" required>
+                                            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                                            <label for="password">Mật khẩu</label>
+                                            <div id="passwordError" class="text-danger"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-floating">
+                                            <input type="password" class="form-control" id="rePassword" name="rePassword" placeholder="Nhập lại mật khẩu" required>
+                                            <i class="fas fa-eye toggle-password" id="toggleRePassword"></i>
+                                            <label for="rePassword">Nhập lại mật khẩu</label>
+                                            <div id="rePasswordError" class="text-danger"></div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100 py-3" type="submit">Đăng ký</button>
+                                    </div>
+
+                                    <div class="col-12 d-flex justify-content-between">
+                                        Đã có tài khoản?<a th:href="@{/login}" class="text-decoration-none">Đăng nhập</a>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</th:block>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/assets/lib/wow/wow.min.js}"></script>
+<script th:src="@{/assets/lib/easing/easing.min.js}"></script>
+<script th:src="@{/assets/lib/waypoints/waypoints.min.js}"></script>
+<script th:src="@{/assets/lib/counterup/counterup.min.js}"></script>
+<script th:src="@{/assets/lib/owlcarousel/owl.carousel.min.js}"></script>
+<script th:src="@{/assets/lib/tempusdominus/js/moment.min.js}"></script>
+<script th:src="@{/assets/lib/tempusdominus/js/moment-timezone.min.js}"></script>
+<script th:src="@{/assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js}"></script>
+
+<!-- Template Javascript -->
+<script th:src="@{/assets/js/main.js}"></script>
+<script>
+    const firstNameInput = document.getElementById('firstName');
+    const firstNameError = document.getElementById('firstNameError');
+
+    // Regex: chỉ cho phép chữ và đúng 1 khoảng trắng giữa các từ, không đầu/cuối, không liên tiếp
+    const nameRegex = /^[\p{L}]+(?:\s[\p{L}]+)*$/u;
+
+    // Kiểm tra khi đang gõ
+    firstNameInput.addEventListener('input', function() {
+        const value = firstNameInput.value;
+
+        if (value !== "" && !nameRegex.test(value)) {
+            // Kiểm tra lý do lỗi
+            if (/^\s|\s$/.test(value)) {
+                firstNameError.textContent = 'Họ không được có khoảng trắng ở đầu hoặc cuối.';
+            } else if (/\s{2,}/.test(value)) {
+                firstNameError.textContent = 'Họ không được có nhiều khoảng trắng liên tiếp.';
+            } else {
+                firstNameError.textContent = 'Họ chỉ được chứa chữ cái và khoảng trắng.';
+            }
+        } else {
+            firstNameError.textContent = "";
+        }
+    });
+
+    // Kiểm tra khi rời khỏi ô
+    firstNameInput.addEventListener('blur', function () {
+        const value = firstNameInput.value.trim();
+        if (value === "") {
+            firstNameError.textContent = 'Họ không được để trống.';
+        }
+    });
+</script>
+
+
+<script>
+    const lastNameInput = document.getElementById('lastName');
+    const lastNameError = document.getElementById('lastNameError');
+
+    // Regex: tên chỉ chứa chữ cái, khoảng trắng hợp lệ (1 dấu cách giữa các từ)
+    const nameRegex1 = /^[\p{L}]+(?:\s[\p{L}]+)*$/u;
+
+    // Kiểm tra khi đang gõ
+    lastNameInput.addEventListener('input', function() {
+        const value = lastNameInput.value;
+
+        if (value !== "" && !nameRegex1.test(value)) {
+            if (/^\s|\s$/.test(value)) {
+                lastNameError.textContent = 'Tên không được có khoảng trắng ở đầu hoặc cuối.';
+            } else if (/\s{2,}/.test(value)) {
+                lastNameError.textContent = 'Tên không được có nhiều khoảng trắng liên tiếp.';
+            } else {
+                lastNameError.textContent = 'Tên chỉ được chứa chữ cái và khoảng trắng.';
+            }
+        } else {
+            lastNameError.textContent = "";
+        }
+    });
+
+    // Kiểm tra khi rời khỏi ô
+    lastNameInput.addEventListener('blur', function () {
+        const value = lastNameInput.value.trim();
+
+        if (value === "") {
+            lastNameError.textContent = 'Tên không được để trống.';
+        }
+    });
+</script>
+<script>
+    const phoneInput = document.getElementById('phone');
+    const phoneError = document.getElementById('phoneError');
+
+    // Regex: bắt đầu bằng 0, ký tự thứ 2 không phải 0, tổng cộng 10 số, không có khoảng trắng ở đầu/cuối
+    const phoneRegex = /^0[1-9][0-9]{8}$/;
+
+    phoneInput.addEventListener('input', function () {
+        const value = phoneInput.value;
+
+        // Kiểm tra khoảng trắng đầu/cuối
+        if (/^\s|\s$/.test(value)) {
+            phoneError.textContent = 'Số điện thoại không được có khoảng trắng ở đầu hoặc cuối.';
+        }
+        else if (!phoneRegex.test(value)) {
+            if (!/^0/.test(value)) {
+                phoneError.textContent = 'Số điện thoại phải bắt đầu bằng số 0.';
+            } else if (value.length !== 10) {
+                phoneError.textContent = 'Số điện thoại phải gồm đúng 10 chữ số.';
+            } else if (/^0{2}/.test(value)) {
+                phoneError.textContent = 'Ký tự thứ 2 không được là số 0.';
+            } else {
+                phoneError.textContent = 'Số điện thoại không hợp lệ.';
+            }
+        } else {
+            phoneError.textContent = '';
+        }
+    });
+
+    phoneInput.addEventListener('blur', function () {
+        const value = phoneInput.value.trim();
+        if (value === '') {
+            phoneError.textContent = 'Số điện thoại không được để trống.';
+        }
+    });
+</script>
+
+<script>
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('emailError');
+
+    // Regex đơn giản kiểm tra email có dạng ten@tenmien, không khoảng trắng
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    emailInput.addEventListener('input', function () {
+        const value = emailInput.value;
+
+        if (/^\s|\s$/.test(value)) {
+            emailError.textContent = 'Email không được có khoảng trắng ở đầu hoặc cuối.';
+        }
+        else if (/\s/.test(value)) {
+            emailError.textContent = 'Email không được chứa khoảng trắng.';
+        }
+        else if (!emailRegex.test(value)) {
+            emailError.textContent = 'Email phải chứa ký tự @ và đúng định dạng (vd: ten@domain.com).';
+        }
+        else {
+            emailError.textContent = '';
+        }
+    });
+
+    emailInput.addEventListener('blur', function () {
+        const value = emailInput.value.trim();
+        if (value === '') {
+            emailError.textContent = 'Email không được để trống.';
+        }
+    });
+</script>
+
+<script>
+    const passwordInput = document.getElementById('password');
+    const passwordError = document.getElementById('passwordError');
+    const strengthBar = document.getElementById('password-strength-bar');
+    const strengthText = document.getElementById('password-strength-text');
+
+    // Password validation regex: tối thiểu 7 ký tự, có chữ hoa, chữ thường, số và ký tự đặc biệt
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{7,}$/;
+
+    passwordInput.addEventListener('input', function() {
+        const password = passwordInput.value;
+
+        // Kiểm tra validation trước
+        validatePassword(password);
+
+        // Sau đó mới kiểm tra strength
+        const strength = checkPasswordStrength(password);
+
+        strengthBar.className = ''; // Reset classes
+        if (strength.score > 0) {
+            strengthBar.classList.add(strength.className);
+        }
+        strengthBar.style.width = strength.score + '%';
+        strengthText.textContent = strength.text;
+    });
+
+    passwordInput.addEventListener('blur', function() {
+        const password = passwordInput.value.trim();
+        if (password === '') {
+            passwordError.textContent = 'Mật khẩu không được để trống.';
+        }
+    });
+
+    function validatePassword(password) {
+        if (password === '') {
+            passwordError.textContent = '';
+            return false;
+        }
+
+        if (!passwordRegex.test(password)) {
+            if (password.length < 7) {
+                passwordError.textContent = 'Mật khẩu phải có ít nhất 7 ký tự.';
+            } else if (!/(?=.*[a-z])/.test(password)) {
+                passwordError.textContent = 'Mật khẩu phải có ít nhất 1 chữ thường.';
+            } else if (!/(?=.*[A-Z])/.test(password)) {
+                passwordError.textContent = 'Mật khẩu phải có ít nhất 1 chữ hoa.';
+            } else if (!/(?=.*\d)/.test(password)) {
+                passwordError.textContent = 'Mật khẩu phải có ít nhất 1 số.';
+            } else if (!/(?=.*[@$!%*?&])/.test(password)) {
+                passwordError.textContent = 'Mật khẩu phải có ít nhất 1 ký tự đặc biệt (@$!%*?&).';
+            } else {
+                passwordError.textContent = 'Mật khẩu chỉ được chứa chữ cái, số và ký tự đặc biệt @$!%*?&.';
+            }
+            return false;
+        } else {
+            passwordError.textContent = '';
+            return true;
+        }
+    }
+
+    function checkPasswordStrength(password) {
+        let score = 0;
+        let strength = {
+            score: 0,
+            text: '',
+            className: ''
+        };
+
+        if (!password) {
+            return strength;
+        }
+
+        // Award points for different criteria
+        if (password.length >= 7) score += 25;
+        if (password.match(/[a-z]/)) score += 10;
+        if (password.match(/[A-Z]/)) score += 15;
+        if (password.match(/[0-9]/)) score += 15;
+        if (password.match(/[@$!%*?&]/)) score += 25;
+        // A little bonus for length
+        if (password.length > 12) score += 10;
+
+        strength.score = Math.min(score, 100);
+
+        if (strength.score >= 75) {
+            strength.text = 'Mạnh';
+            strength.className = 'strength-strong';
+        } else if (strength.score >= 50) {
+            strength.text = 'Trung bình';
+            strength.className = 'strength-medium';
+        } else if (strength.score > 0) {
+            strength.text = 'Yếu';
+            strength.className = 'strength-weak';
+        }
+
+        return strength;
+    }
+
+
+</script>
+
+</body>
+
+</html>

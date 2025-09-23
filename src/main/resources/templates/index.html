@@ -34,6 +34,58 @@
 </head>
 
 <body>
+
+<!-- Registration Success Modal -->
+<div class="modal fade registration-modal" id="registrationSuccessModal" tabindex="-1" role="dialog"
+     aria-labelledby="registrationModalLabel" aria-hidden="true" th:if="${registrationSuccess}">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registrationModalLabel">
+                    <i class="fas fa-check-circle mr-2"></i>Tạo tài khoản chủ xe thành công!
+                </h5>
+            </div>
+            <div class="modal-body">
+                <div class="success-note">
+                    <i class="fas fa-info-circle mr-1"></i>
+                    Tài khoản của bạn đã được tạo thành công. Vui lòng lưu lại thông tin bên dưới.
+                </div>
+
+                <div class="user-info">
+                    <div class="info-row">
+                        <span class="info-label">Họ tên chủ xe:</span>
+                        <span class="info-value" th:text="${userFullName}">Nguyễn Trang</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">SĐT:</span>
+                        <span class="info-value" th:text="${userPhone}">0987666111</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Email:</span>
+                        <span class="info-value" th:text="${userEmail}">user@gmail.com</span>
+                    </div>
+
+                    <div class="info-row">
+                        <span class="info-label">Giới tính:</span>
+                        <span class="info-value" th:text="${userGender}">Nam</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Địa chỉ:</span>
+                        <span class="info-value" th:text="${userAddress}">Tphcm</span>
+                    </div>
+                </div>
+
+                <div class="success-note">
+                    <i class="fas fa-exclamation-triangle mr-1"></i>
+                    <strong>Lưu ý:</strong> Bạn có thể đăng nhập vào hệ thống bằng email và mật khẩu đã đăng ký.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a th:href="@{/}" class="btn btn-primary">Quay về trang chủ</a>
+            </div>
+        </div>
+    </div>
+</div>
 <th:block th:replace="layout/user-layout :: layout">
     <th:block th:fragment="pageContent">
         <div class="container-fluid p-0 mb-5">

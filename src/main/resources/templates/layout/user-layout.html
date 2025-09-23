@@ -76,6 +76,15 @@
 
 <!-- Template Javascript -->
 <script th:src="@{/assets/js/main.js}"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        if (document.getElementById('registrationSuccessModal')) {
+            $('#registrationSuccessModal').modal('show');
+        }
+    });
+</script>
+
 </body>
 
 </html>

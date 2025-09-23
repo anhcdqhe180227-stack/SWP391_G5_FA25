@@ -13,12 +13,15 @@ import java.util.Set;
 @Table(name = "Owner")
 @Data
 public class OwnerEntity extends AbstractEntity {
-    @Column(name = "full_name")
-    private String fullName;
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
 
     private String gender;
 
-    private String description;
+    private String address;
 
     @Basic
     @Column(name = "phone_number", nullable = true, length = 20)
@@ -36,12 +39,20 @@ public class OwnerEntity extends AbstractEntity {
     @JsonManagedReference
     private Set<VehicleEntity> vehicles;
 
-    public String getFullName() {
-        return fullName;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getGender() {
@@ -52,12 +63,12 @@ public class OwnerEntity extends AbstractEntity {
         this.gender = gender;
     }
 
-    public String getDescription() {
-        return description;
+    public String getAddress() {
+        return address;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getPhoneNumber() {

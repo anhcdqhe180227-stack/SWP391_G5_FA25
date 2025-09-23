@@ -21,19 +21,26 @@ import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Autowired
     @Lazy
     private PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     @Override
     public boolean validateCredentials(String username, String password) {
         return userRepository.existsByEmailAndPassword(username, passwordEncoder.encode(password));
+    }
+
+    @Override
+    public UserEntity saveUser(UserEntity user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public Optional<UserEntity> findByEmail(String email) {
+        return Optional.empty();
     }
 
     @Override
