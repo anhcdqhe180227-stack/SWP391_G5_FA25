@@ -1,24 +1,25 @@
 package com.swp.carcare.controller.admin;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import com.swp.carcare.dto.EmployeeDto;
+import com.swp.carcare.entity.EmployeeEntity;
 import com.swp.carcare.entity.UserEntity;
 import com.swp.carcare.repository.EmployeeRepository;
 import com.swp.carcare.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
 
@@ -35,70 +36,69 @@ public class AdminEmployeeController {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @GetMapping("")
-    public String userListPage(Model model,
-                               @RequestParam(value = "email", required = false) String emailParam,
-                               @RequestParam(value = "page", defaultValue = "0") int page,
-                               @RequestParam(value = "size", defaultValue = "5") int size) {
-
-        List<UserEntity> allUsers = userRepository.findAll();
-
-        String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        UserEntity user = userRepository.findByEmail(username).orElse(null);
-
-        if (emailParam != null && !emailParam.isEmpty()) {
-            allUsers = allUsers.stream()
-                    .filter(u -> u.getEmail() != null && u.getEmail().toLowerCase().contains(emailParam.toLowerCase()))
-                    .collect(Collectors.toList());
-        }
-
-        int totalItems = allUsers.size();
-        int totalPages = (int) Math.ceil((double) totalItems / size);
-
-        int start = Math.min(page * size, totalItems);
-        int end = Math.min(start + size, totalItems);
-
-        List<UserEntity> users = allUsers.subList(start, end);
-
-        model.addAttribute("users", users);
-        model.addAttribute("email", emailParam);
-        model.addAttribute("currentPage", page);
-        model.addAttribute("totalPages", totalPages);
-        model.addAttribute("currentUserEmail", username);
-
-        return "admin/employee/list";
+    @GetMapping
+    public String getAllEmployees(
+            Model model) {
+        List<EmployeeDto> employees = getAllEmployees();
+        model.addAttribute("employees", employees);
+        return "admin/employee/view";
     }
 
-    // Form thêm mới
+    public List<EmployeeDto> getAllEmployees() {
+        List<EmployeeEntity> employeeEntities = employeeRepository.findAll();
+
+        List<EmployeeDto> employeeDtos = new ArrayList<>();
+        for (EmployeeEntity employee : employeeEntities) {
+            EmployeeDto dto = new EmployeeDto(
+                    employee.getId(),
+                    employee.getFullName(),
+                    employee.getGender(),
+                    employee.getPhoneNumber(),
+                    employee.getUser().getEmail(),
+                    employee.getStatus()
+            );
+            employeeDtos.add(dto);
+        }
+
+        return employeeDtos;
+    }
+
+
     @GetMapping("/add")
     public String addUserForm(Model model) {
-        model.addAttribute("userDto", new UserDto());
+        model.addAttribute("employeeDto", new EmployeeDto());
         return "admin/employee/add";
     }
 
     @PostMapping("/save")
-    public String saveUser(@ModelAttribute("userDto") @Valid UserDto userDto,
+    public String saveUser(@ModelAttribute("employeeDto") @Valid EmployeeDto employeeDto,
                            BindingResult result,
                            Model model) {
-
         if (result.hasErrors()) {
             return "admin/employee/add";
         }
 
-        if (userRepository.findByEmail(userDto.getEmail()).isPresent()) {
-            model.addAttribute("roles", roleRepository.findAll());
-            model.addAttribute("emailError", "Email đã tồn tại rồi");
+        if (userRepository.findByEmail(employeeDto.getEmail()).isPresent()) {
+            model.addAttribute("emailError", "Email đã tồn tại rồi!");
             return "admin/employee/add";
         }
 
-
         UserEntity user = new UserEntity();
-        user.setEmail(userDto.getEmail());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setRole(selectedRole);
-        user.setStatus(userDto.getStatus());
+        user.setEmail(employeeDto.getEmail());
+        user.setPassword(passwordEncoder.encode(employeeDto.getPassword()));
+        user.setStatus(employeeDto.getStatus());
+        user.setRole(2);
 
-        UserEntity save = userRepository.save(user);
+        UserEntity savedUser = userRepository.save(user);
+
+        EmployeeEntity employee = new EmployeeEntity();
+        employee.setFullName(employeeDto.getFullName());
+        employee.setGender(employeeDto.getGender());
+        employee.setDescription(employeeDto.getDescription());
+        employee.setPhoneNumber(employeeDto.getPhoneNumber());
+        employee.setUser(savedUser);
+
+        employeeRepository.save(employee);
 
         return "redirect:/admin/employee?add=true";
     }
@@ -106,75 +106,57 @@ public class AdminEmployeeController {
 
     @GetMapping("/edit/{id}")
     public String editUserForm(@PathVariable("id") Long id, Model model) {
-        Optional<UserEntity> optional = userRepository.findById(id);
-        if (optional.isPresent()) {
-            UserEntity user = optional.get();
-            UserDto dto = new UserDto();
-            dto.setId(user.getId());
-            dto.setEmail(user.getEmail());
-            dto.setStatus(user.getStatus());
-            dto.setRoleName(user.getRole().getName().name());
+        Optional<EmployeeEntity> optional = employeeRepository.findById(id);
 
-            model.addAttribute("userDto", dto);
-            model.addAttribute("roles", roleRepository.findAll());
+        if (optional.isPresent()) {
+            EmployeeEntity employeeEntity = optional.get();
+
+            EmployeeDto dto = new EmployeeDto();
+            dto.setId(employeeEntity.getId());
+            dto.setEmail(employeeEntity.getUser().getEmail());
+            dto.setStatus(employeeEntity.getStatus());
+            dto.setFullName(employeeEntity.getFullName());
+            dto.setGender(employeeEntity.getGender());
+            dto.setDescription(employeeEntity.getDescription());
+            dto.setPhoneNumber(employeeEntity.getPhoneNumber());
+
+            model.addAttribute("employeeDto", dto);
             return "admin/employee/edit";
+        }
+
+        return "redirect:/admin/employee";
+    }
+
+
+    @PostMapping("/update")
+    public String updateUser(@RequestParam("id") Long id,
+                             @ModelAttribute("employeeDto") @Valid EmployeeDto employeeDto,
+                             BindingResult result,
+                             Model model) {
+        if (result.hasErrors()) {
+            return "admin/employee/edit";
+        }
+
+        Optional<EmployeeEntity> optionalEmp = employeeRepository.findById(id);
+        if (optionalEmp.isPresent()) {
+            EmployeeEntity employee = optionalEmp.get();
+            employee.setFullName(employeeDto.getFullName());
+            employee.setGender(employeeDto.getGender());
+            employee.setDescription(employeeDto.getDescription());
+            employee.setPhoneNumber(employeeDto.getPhoneNumber());
+            employeeRepository.save(employee);
+            return "redirect:/admin/employee?update=true";
         }
         return "redirect:/admin/employee";
     }
 
-    @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") Long id,
-                             @ModelAttribute("userDto") @Valid UserDto userDto,
-                             BindingResult result,
-                             Model model) {
-        if (result.hasErrors()) {
-            model.addAttribute("roles", roleRepository.findAll());
-            return "admin/employee/edit";
-        }
-
-        Optional<UserEntity> emailUser = userRepository.findByEmail(userDto.getEmail());
-        if (emailUser.isPresent() && !emailUser.get().getId().equals(id)) {
-            model.addAttribute("emailError", "Email is already registered.");
-            return "admin/employee/edit";
-        }
-
-        Optional<UserEntity> optional = userRepository.findById(id);
-        if (optional.isPresent()) {
-            UserEntity user = optional.get();
-            user.setEmail(userDto.getEmail());
-            user.setStatus(userDto.getStatus());
-
-            if (userDto.getPassword() != null && !userDto.getPassword().isBlank()) {
-                user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-            }
-
-            userRepository.save(user);
-
-        }
-
-        return "redirect:/admin/employee?edit=true";
-    }
-
-
-    @PostMapping("/update-status/{id}")
-    public String updateUserStatus(@PathVariable Long id,
-                                   @RequestParam("status") Integer status) {
-        Optional<UserEntity> optional = userRepository.findById(id);
-        if (optional.isPresent()) {
-            UserEntity user = optional.get();
-            user.setStatus(status);
-            userRepository.save(user);
-
-        }
-        return "redirect:/admin/employee?update=true";
-    }
-
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id) {
-        Optional<UserEntity> optional = userRepository.findById(id);
-        String email = optional.map(UserEntity::getEmail).orElse("");
-        userRepository.deleteById(id);
-
-        return "redirect:/admin/employee?delete=true";
+    @GetMapping("/update-status/{id}/{newStatus}")
+    public String toggleEmployeeStatus(@PathVariable("id") Long id,
+                                       @PathVariable("newStatus") Integer newStatus) {
+        Optional<EmployeeEntity> employeeOpt = employeeRepository.findById(id);
+        EmployeeEntity employee = employeeOpt.get();
+        employee.setStatus(newStatus);
+        employeeRepository.save(employee);
+        return "redirect:/admin/employee?updateStatus=true";
     }
 }

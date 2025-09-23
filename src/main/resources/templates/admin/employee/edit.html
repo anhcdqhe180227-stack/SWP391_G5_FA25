@@ -1,241 +1,146 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html>
+<html lang="en" th:fragment="layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
-    <!-- Basic Page Info -->
     <meta charset="utf-8"/>
-    <title>Khuyến mãi</title>
-
-    <!-- Site favicon -->
-    <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="${pageContext.request.contextPath}/vendors/images/apple-touch-icon.png"
-    />
-    <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="${pageContext.request.contextPath}/vendors/images/favicon-32x32.png"
-    />
-    <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="${pageContext.request.contextPath}/vendors/images/favicon-16x16.png"
-    />
-
-    <!-- Mobile Specific Metas -->
-    <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, maximum-scale=1"
-    />
-
-    <!-- Google Font -->
-    <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-            rel="stylesheet"
-    />
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/vendors/styles/core.css"/>
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="${pageContext.request.contextPath}/vendors/styles/icon-font.min.css"
-    />
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="${pageContext.request.contextPath}/assets/plugins/datatables/css/dataTables.bootstrap4.min.css"
-    />
-    <link
-            rel="stylesheet"
-            type="text/css"
-            href="${pageContext.request.contextPath}/assets/plugins/datatables/css/responsive.bootstrap4.min.css"
-    />
-    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/vendors/styles/style.css"/>
+    <title>Dashboard</title>
 </head>
 <body>
 
-<%@ include file="../includes/header-admin.jsp" %>
-
-<%@ include file="../includes/right-admin.jsp" %>
-
-
-<%@ include file="../includes/left-admin.jsp" %>
-
-
-<div class="main-container">
-    <div class="pd-ltr-20 xs-pd-20-10">
-        <div class="min-height-200px">
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <div class="title">
-                            <h4>Khuyến mãi</h4>
+<th:block th:replace="layout/admin-layout :: layout">
+    <th:block th:fragment="pageContent">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>Quản lý nhân viên</h4>
+                            </div>
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a th:href="@{/admin/dashboard}">Trang quản trị</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        Quản lý nhân viên
+                                    </li>
+                                </ol>
+                            </nav>
                         </div>
-                        <nav aria-label="breadcrumb" role="navigation">
-                            <ol class="breadcrumb">
-                                <li class="breadcrumb-item">
-                                    <a href="${pageContext.request.contextPath}">Trang quản trị</a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">
-                                    Khuyến mãi
-                                </li>
-                            </ol>
-                        </nav>
                     </div>
                 </div>
-            </div>
-            <!-- Simple Datatable start -->
-            <div class="pd-20 card-box mb-30">
-                <div class="clearfix">
-                    <div class="pull-left">
-                        <h4 class="text-blue h4">Cập nhật khuyến mãi</h4>
+
+                <!-- Employee Form -->
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Chỉnh sửa nhân viên</h4>
+                        </div>
                     </div>
+                    <form th:action="@{/admin/employee/update}" method="post" th:object="${employeeDto}" class="form" accept-charset="UTF-8">
+
+                        <input type="hidden" id="id" name="id" th:field="*{id}"/>
+
+                        <!-- Họ tên -->
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label" for="fullName">Họ tên</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input type="text" id="fullName" th:field="*{fullName}" class="form-control" placeholder="Nhập họ tên"/>
+                                <div th:if="${#fields.hasErrors('fullName')}" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('fullName')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Giới tính -->
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label" for="gender">Giới tính</label>
+                            <div class="col-sm-12 col-md-10">
+                                <select id="gender" th:field="*{gender}" class="custom-select col-12">
+                                    <option value="male" th:selected="${employeeDto.gender == 'male'}">Nam</option>
+                                    <option value="female" th:selected="${employeeDto.gender == 'female'}">Nữ</option>
+                                </select>
+                                <div th:if="${#fields.hasErrors('gender')}" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('gender')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Số điện thoại -->
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label" for="phoneNumber">Số điện thoại</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input type="text" id="phoneNumber" th:field="*{phoneNumber}" class="form-control" placeholder="Nhập số điện thoại"/>
+                                <div th:if="${#fields.hasErrors('phoneNumber')}" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('phoneNumber')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label" for="email">Email</label>
+                            <div class="col-sm-12 col-md-10">
+                                <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Nhập email"/>
+                                <div th:if="${#fields.hasErrors('email')}" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('email')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Mô tả -->
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label" for="description">Mô tả</label>
+                            <div class="col-sm-12 col-md-10">
+                                <textarea id="description" th:field="*{description}" class="form-control" placeholder="Mô tả công việc"></textarea>
+                                <div th:if="${#fields.hasErrors('description')}" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('description')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Trạng thái -->
+                        <div class="form-group row">
+                            <label class="col-sm-12 col-md-2 col-form-label" for="status">Trạng thái</label>
+                            <div class="col-sm-12 col-md-10">
+                                <select id="status" th:field="*{status}" class="custom-select col-12">
+                                    <option value="1" th:selected="${employeeDto.status == 1}">Kích hoạt</option>
+                                    <option value="0" th:selected="${employeeDto.status == 0}">Khóa</option>
+                                </select>
+                                <div th:if="${#fields.hasErrors('status')}" class="text-danger">
+                                    <ul>
+                                        <li th:each="err : ${#fields.errors('status')}" th:text="${err}"></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nút Submit -->
+                        <div class="form-group row">
+                            <div class="col-sm-12 col-md-10 offset-md-2">
+                                <button type="submit" class="btn btn-primary">Cập nhật nhân viên</button>
+                                <a th:href="@{/admin/employee}" class="btn btn-secondary">Hủy</a>
+                            </div>
+                        </div>
+
+                    </form>
                 </div>
-                <form:form modelAttribute="voucher" method="post" class="form" accept-charset="UTF-8"
-                           action="${pageContext.request.contextPath}/voucher/edit/${voucher.id}">
-                    <!-- Mã chương trình (read-only) -->
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Mã chương trình</label>
-                        <div class="col-sm-12 col-md-10">
-                            <form:input path="maChuongTrinh" cssClass="form-control" readonly="true" />
-                            <form:errors path="maChuongTrinh" cssClass="text-danger" />
-                        </div>
-                    </div>
-
-                    <!-- Tên chương trình -->
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Tên chương trình</label>
-                        <div class="col-sm-12 col-md-10">
-                            <form:input path="tenChuongTrinh" cssClass="form-control" />
-                            <form:errors path="tenChuongTrinh" cssClass="text-danger" />
-                        </div>
-                    </div>
-
-                    <!-- Ngày bắt đầu -->
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Ngày bắt đầu</label>
-                        <div class="col-sm-12 col-md-10">
-                            <input class="form-control" type="date" name="ngayBatDau" id="ngayBatDau"
-                                   value="${voucher.ngayBatDau}" />
-                            <form:errors path="ngayBatDau" cssClass="text-danger" />
-                            <div id="errorNgayBatDau" class="text-danger"></div>
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Ngày kết thúc</label>
-                        <div class="col-sm-12 col-md-10">
-                            <input class="form-control" type="date" name="ngayKetThuc" id="ngayKetThuc"
-                                   value="${voucher.ngayKetThuc}" />
-                            <form:errors path="ngayKetThuc" cssClass="text-danger" />
-                            <div id="errorNgayKetThuc" class="text-danger"></div>
-                        </div>
-                    </div>
-
-
-                    <!-- Giá trị giảm -->
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Giá trị giảm</label>
-                        <div class="col-sm-12 col-md-10">
-                            <form:input path="giaTriGiam" cssClass="form-control" type="number" step="0.01" min="0.01" />
-                            <form:errors path="giaTriGiam" cssClass="text-danger" />
-                        </div>
-                    </div>
-
-                    <!-- Trạng thái -->
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Trạng thái</label>
-                        <div class="col-sm-12 col-md-10">
-                            <form:select path="trangThai" cssClass="custom-select col-12">
-                                <form:option value="" label="-- Chọn trạng thái --" />
-                                <form:option value="true" label="Kích hoạt" />
-                                <form:option value="false" label="Không kích hoạt" />
-                            </form:select>
-                            <form:errors path="trangThai" cssClass="text-danger" />
-                        </div>
-                    </div>
-
-                    <!-- Nút submit -->
-                    <div class="form-group row">
-                        <div class="col-sm-12 col-md-10 offset-md-2">
-                            <button type="submit" class="btn btn-warning">Cập nhật</button>
-                            <a href="${pageContext.request.contextPath}/voucher/list" class="btn btn-secondary">Hủy</a>
-                        </div>
-                    </div>
-                </form:form>
             </div>
         </div>
-    </div>
-</div>
-
-<!-- js -->
-<script src="${pageContext.request.contextPath}/vendors/scripts/core.js"></script>
-
-<script src="${pageContext.request.contextPath}/vendors/scripts/script.min.js"></script>
-<script src="${pageContext.request.contextPath}/vendors/scripts/process.js"></script>
-<script src="${pageContext.request.contextPath}/vendors/scripts/layout-settings.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/jquery.dataTables.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/dataTables.bootstrap4.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/dataTables.responsive.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
-<!-- buttons for Export datatable -->
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/dataTables.buttons.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/buttons.bootstrap4.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/buttons.print.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/buttons.html5.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/buttons.flash.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/pdfmake.min.js"></script>
-<script src="${pageContext.request.contextPath}/assets/plugins/datatables/js/vfs_fonts.js"></script>
-<script src="${pageContext.request.contextPath}/vendors/scripts/datatable-setting.js"></script>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector("form");
-        const ngayBatDau = document.getElementById("ngayBatDau");
-        const ngayKetThuc = document.getElementById("ngayKetThuc");
-        const errorNgayBatDau = document.getElementById("errorNgayBatDau");
-        const errorNgayKetThuc = document.getElementById("errorNgayKetThuc");
-
-        const today = new Date().toISOString().split("T")[0];
-        ngayBatDau.setAttribute("min", today);
-
-        form.addEventListener("submit", function (e) {
-            let isValid = true;
-
-            errorNgayBatDau.textContent = "";
-            errorNgayKetThuc.textContent = "";
-
-            const startDate = new Date(ngayBatDau.value);
-            const endDate = new Date(ngayKetThuc.value);
-            const now = new Date();
-            now.setHours(0, 0, 0, 0);
-
-            if (!ngayBatDau.value) {
-                errorNgayBatDau.textContent = "Vui lòng chọn ngày bắt đầu.";
-                isValid = false;
-            } else if (startDate < now) {
-                errorNgayBatDau.textContent = "Ngày bắt đầu không được nhỏ hơn hôm nay.";
-                isValid = false;
-            }
-
-            if (!ngayKetThuc.value) {
-                errorNgayKetThuc.textContent = "Vui lòng chọn ngày kết thúc.";
-                isValid = false;
-            } else if (endDate <= startDate) {
-                errorNgayKetThuc.textContent = "Ngày kết thúc phải sau ngày bắt đầu.";
-                isValid = false;
-            }
-
-            if (!isValid) {
-                e.preventDefault();
-            }
-        });
-    });
-</script>
+    </th:block>
+</th:block>
 
 </body>
 </html>

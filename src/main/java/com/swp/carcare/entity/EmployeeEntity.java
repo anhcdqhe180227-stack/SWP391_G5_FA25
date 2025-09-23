@@ -24,8 +24,6 @@ public class EmployeeEntity extends AbstractEntity {
     @Column(name = "phoneNumber", nullable = true, length = 20)
     private String phoneNumber;
 
-    private String email;
-
     @ManyToOne
     @JoinColumn(name = "userId")
     @EqualsAndHashCode.Exclude
@@ -62,14 +60,6 @@ public class EmployeeEntity extends AbstractEntity {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public UserEntity getUser() {

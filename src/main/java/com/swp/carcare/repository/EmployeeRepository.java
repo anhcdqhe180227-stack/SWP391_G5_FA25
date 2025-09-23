@@ -12,4 +12,6 @@ import java.util.Optional;
 @SpringBootApplication
 public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
 
+    EmployeeEntity findByUser(UserEntity entity);
+
 }
