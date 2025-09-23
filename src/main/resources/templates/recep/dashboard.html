@@ -1,26 +1,10 @@
-<!DOCTYPE html>
+<!DSepYPE html>
 <html lang="en" th:fragment="layout" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8"/>
     <title>Dashboard</title>
-
-    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/assets_admin/vendors/images/apple-touch-icon.png}"/>
-    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/assets_admin/vendors/images/favicon-32x32.png}"/>
-    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/assets_admin/vendors/images/favicon-16x16.png}"/>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-          rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets_admin/vendors/styles/core.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets_admin/vendors/styles/icon-font.min.css}"/>
-    <link rel="stylesheet" type="text/css"
-          th:href="@{/assets_admin/plugins/datatables/css/dataTables.bootstrap4.min.css}"/>
-    <link rel="stylesheet" type="text/css"
-          th:href="@{/assets_admin/plugins/datatables/css/responsive.bootstrap4.min.css}"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/assets_admin/vendors/styles/style.css}"/>
 </head>
 <body>
 
@@ -160,20 +144,107 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card-box pb-10">
+                <div class="h5 pd-20 mb-0">Khách hàng sửa xe gần nhất</div>
+                <table class="data-table table nowrap">
+                    <thead>
+                    <tr>
+                        <th class="table-plus">Tên khách hàng</th>
+                        <th>Giới tính</th>
+                        <th>Thợ sửa xe</th>
+                        <th>Ngày sửa</th>
+                        <th>Dịch vụ</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="table-plus">
+                            <div class="name-avatar d-flex align-items-center">
+                                <div class="avatar mr-2 flex-shrink-0">
+                                    <img th:src="@{/assets/vendors/images/photo4.jpg}" class="border-radius-100 shadow" width="40"
+                                         height="40" alt=""/>
+                                </div>
+                                <div class="txt">
+                                    <div class="weight-600">Nguyễn Văn A</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Nam</td>
+                        <td>Thợ sửa xe Trần Văn B</td>
+                        <td>19 Sep 2025</td>
+                        <td>
+                <span class="badge badge-pill" data-bgcolor="#e7ebf5"
+                      data-color="#265ed7">Sửa động cơ</span>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="table-plus">
+                            <div class="name-avatar d-flex align-items-center">
+                                <div class="avatar mr-2 flex-shrink-0">
+                                    <img th:src="@{/assets/vendors/images/photo5.jpg}" class="border-radius-100 shadow" width="40"
+                                         height="40" alt=""/>
+                                </div>
+                                <div class="txt">
+                                    <div class="weight-600">Lê Thị B</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Nữ</td>
+                        <td>Thợ sửa xe Nguyễn Văn C</td>
+                        <td>22 Jul 2025</td>
+                        <td>
+                            <span class="badge badge-pill" data-bgcolor="#e7ebf5" data-color="#265ed7">Thay dầu động cơ</span>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="table-plus">
+                            <div class="name-avatar d-flex align-items-center">
+                                <div class="avatar mr-2 flex-shrink-0">
+                                    <img th:src="@{/assets/vendors/images/photo6.jpg}" class="border-radius-100 shadow" width="40"
+                                         height="40" alt=""/>
+                                </div>
+                                <div class="txt">
+                                    <div class="weight-600">Trần Minh D</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Nam</td>
+                        <td>Thợ sửa xe Phạm Quang E</td>
+                        <td>15 Sep 2025</td>
+                        <td>
+                <span class="badge badge-pill" data-bgcolor="#e7ebf5"
+                      data-color="#265ed7">Thay bánh xe</span>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td class="table-plus">
+                            <div class="name-avatar d-flex align-items-center">
+                                <div class="avatar mr-2 flex-shrink-0">
+                                    <img th:src="@{/assets/vendors/images/photo7.jpg}" class="border-radius-100 shadow" width="40"
+                                         height="40" alt=""/>
+                                </div>
+                                <div class="txt">
+                                    <div class="weight-600">Phạm Quỳnh F</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>Nữ</td>
+                        <td>Thợ sửa xe Bùi Minh G</td>
+                        <td>08 Sep 2025</td>
+                        <td>
+                            <span class="badge badge-pill" data-bgcolor="#e7ebf5" data-color="#265ed7">Lắp máy móc mới</span>
+                        </td>
+                        
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </th:block>
 </th:block>
-
-<script th:src="@{/assets_admin/vendors/scripts/core.js}"></script>
-<script th:src="@{/assets_admin/vendors/scripts/script.min.js}"></script>
-<script th:src="@{/assets_admin/vendors/scripts/process.js}"></script>
-<script th:src="@{/assets_admin/vendors/scripts/layout-settings.js}"></script>
-<script th:src="@{/assets_admin/plugins/apexcharts/apexcharts.min.js}"></script>
-<script th:src="@{/assets_admin/plugins/datatables/js/jquery.dataTables.min.js}"></script>
-<script th:src="@{/assets_admin/plugins/datatables/js/dataTables.bootstrap4.min.js}"></script>
-<script th:src="@{/assets_admin/plugins/datatables/js/dataTables.responsive.min.js}"></script>
-<script th:src="@{/assets_admin/plugins/datatables/js/responsive.bootstrap4.min.js}"></script>
-<script th:src="@{/assets_admin/vendors/scripts/dashboard3.js}"></script>
-
 </body>
 </html>
