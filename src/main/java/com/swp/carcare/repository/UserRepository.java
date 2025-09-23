@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 @SpringBootApplication
-public interface UserRepository extends JpaRepository<UserEntity, Long> {
+public interface UserRepository extends JpaRepository<UserEntity, Integer> {
 
     public UserEntity save(UserEntity user);
 

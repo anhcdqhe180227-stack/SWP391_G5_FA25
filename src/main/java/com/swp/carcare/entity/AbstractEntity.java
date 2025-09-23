@@ -18,7 +18,7 @@ public class AbstractEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    protected Long id;
+    protected Integer id;
 
     @CreatedDate
     @Column(name = "created_date_time" , updatable = false)
@@ -37,11 +37,11 @@ public class AbstractEntity implements Serializable {
     @Column(name = "status", nullable = true)
     private Integer status;
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

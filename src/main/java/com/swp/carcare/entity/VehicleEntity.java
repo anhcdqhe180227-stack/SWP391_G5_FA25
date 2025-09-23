@@ -23,12 +23,19 @@ public class VehicleEntity extends AbstractEntity {
     private String licensePlate;
 
     private Integer year;
+    private String img;
 
     @ManyToOne
     @JoinColumn(name = "ownerId")
     @EqualsAndHashCode.Exclude
     @JsonBackReference
     private OwnerEntity owner;
+
+    @OneToMany(mappedBy = "vehicle", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonManagedReference
+    private Set<PartEntity> parts;
 
     public String getModel() {
         return model;
@@ -60,5 +67,21 @@ public class VehicleEntity extends AbstractEntity {
 
     public void setOwner(OwnerEntity owner) {
         this.owner = owner;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
+    public Set<PartEntity> getParts() {
+        return parts;
+    }
+
+    public void setParts(Set<PartEntity> parts) {
+        this.parts = parts;
     }
 }

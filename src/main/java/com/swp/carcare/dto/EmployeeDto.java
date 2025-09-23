@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 
 @Data
 public class EmployeeDto {
-    private Long id;
-    private Long userId;
+    private Integer id;
+    private Integer userId;
     private String fullName;
     private String gender;
     private String description;
@@ -25,7 +25,7 @@ public class EmployeeDto {
     public EmployeeDto() {
     }
 
-    public EmployeeDto(Long id, String fullName, String gender, String phoneNumber, String email, Integer status) {
+    public EmployeeDto(Integer id, String fullName, String gender, String phoneNumber, String email, Integer status) {
         this.id = id;
         this.fullName = fullName;
         this.gender = gender;
@@ -34,19 +34,19 @@ public class EmployeeDto {
         this.status = status;
     }
 
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public Long getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

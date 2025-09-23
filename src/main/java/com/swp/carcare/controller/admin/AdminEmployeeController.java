@@ -105,7 +105,7 @@ public class AdminEmployeeController {
 
 
     @GetMapping("/edit/{id}")
-    public String editUserForm(@PathVariable("id") Long id, Model model) {
+    public String editUserForm(@PathVariable("id") Integer id, Model model) {
         Optional<EmployeeEntity> optional = employeeRepository.findById(id);
 
         if (optional.isPresent()) {
@@ -129,7 +129,7 @@ public class AdminEmployeeController {
 
 
     @PostMapping("/update")
-    public String updateUser(@RequestParam("id") Long id,
+    public String updateUser(@RequestParam("id") Integer id,
                              @ModelAttribute("employeeDto") @Valid EmployeeDto employeeDto,
                              BindingResult result,
                              Model model) {
@@ -151,7 +151,7 @@ public class AdminEmployeeController {
     }
 
     @GetMapping("/update-status/{id}/{newStatus}")
-    public String toggleEmployeeStatus(@PathVariable("id") Long id,
+    public String toggleEmployeeStatus(@PathVariable("id") Integer id,
                                        @PathVariable("newStatus") Integer newStatus) {
         Optional<EmployeeEntity> employeeOpt = employeeRepository.findById(id);
         EmployeeEntity employee = employeeOpt.get();

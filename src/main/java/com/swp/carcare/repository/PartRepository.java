@@ -1,6 +1,6 @@
 package com.swp.carcare.repository;
 
-import com.swp.carcare.entity.OwnerEntity;
+import com.swp.carcare.entity.PartEntity;
 import com.swp.carcare.entity.UserEntity;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 @SpringBootApplication
-public interface OwnerRepository extends JpaRepository<OwnerEntity, Integer> {
-    Optional<OwnerEntity> findByPhoneNumber(String phone);
-    Optional<OwnerEntity> findByUser(UserEntity user);
+public interface PartRepository extends JpaRepository<PartEntity, Integer> {
+
 }

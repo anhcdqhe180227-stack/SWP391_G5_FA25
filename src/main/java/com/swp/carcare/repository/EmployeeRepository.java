@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 @SpringBootApplication
-public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Long> {
+public interface EmployeeRepository extends JpaRepository<EmployeeEntity, Integer> {
 
     EmployeeEntity findByUser(UserEntity entity);
 
