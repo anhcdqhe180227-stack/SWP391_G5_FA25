@@ -30,6 +30,8 @@ public class UserEntity extends AbstractEntity {
     @Column(columnDefinition = "INT DEFAULT 1")
     private Integer status = 1; // 1: active, 0: locked
 
+    private String avatar;
+
     @Column
     private Integer role; //0: admin, 1: owner, 2: emp, 3: recep
 
@@ -66,5 +68,13 @@ public class UserEntity extends AbstractEntity {
 
     public void setRole(Integer role) {
         this.role = role;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

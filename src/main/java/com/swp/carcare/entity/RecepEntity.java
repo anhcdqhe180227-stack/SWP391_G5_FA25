@@ -10,9 +10,9 @@ import lombok.ToString;
 import java.util.Set;
 
 @Entity
-@Table(name = "Employee")
+@Table(name = "Recep")
 @Data
-public class EmployeeEntity extends AbstractEntity {
+public class RecepEntity extends AbstractEntity {
     @Column(name = "full_name")
     private String fullName;
 
@@ -29,18 +29,6 @@ public class EmployeeEntity extends AbstractEntity {
     @EqualsAndHashCode.Exclude
     @JsonBackReference
     private UserEntity user;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JsonManagedReference
-    private Set<ShiftEntity> shifts;
-
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    @JsonManagedReference
-    private Set<AppointmentEntity> appointments;
 
     public String getFullName() {
         return fullName;
@@ -80,13 +68,5 @@ public class EmployeeEntity extends AbstractEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
-    }
-
-    public Set<ShiftEntity> getShifts() {
-        return shifts;
-    }
-
-    public void setShifts(Set<ShiftEntity> shifts) {
-        this.shifts = shifts;
     }
 }

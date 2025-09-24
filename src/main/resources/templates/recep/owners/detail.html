@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Dashboard</title>
+</head>
+<body>
+
+<th:block th:replace="layout/admin-layout :: layout">
+    <th:block th:fragment="pageContent">
+        <div class="pd-ltr-20 xs-pd-20-10">
+            <div class="min-height-200px">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12">
+                            <div class="title">
+                                <h4>Chi tiết chủ xe</h4>
+                            </div>
+                            <nav aria-label="breadcrumb" role="navigation">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item">
+                                        <a th:href="@{/admin/dashboard}">Trang quản trị</a>
+                                    </li>
+                                    <li class="breadcrumb-item active" aria-current="page">
+                                        Chi tiết chủ xe
+                                    </li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pd-20 card-box mb-30">
+                    <div class="clearfix">
+                        <div class="pull-left">
+                            <h4 class="text-blue h4">Chi tiết chủ xe</h4>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Avatar</label>
+                        <div class="col-sm-12 col-md-10">
+                            <img th:src="@{${owner.avatar}}" alt="Avatar" style="width: 100px; height: 100px; border-radius: 50%;"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label" for="fullName">Họ tên</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input type="text" id="fullName" class="form-control" th:value="${owner.firstName + ' ' + owner.lastName}" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Giới tính</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input type="text" class="form-control" th:value="${owner.gender == 'male' ? 'Nam' : 'Nữ'}" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label" for="phoneNumber">Số điện thoại</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input type="text" id="phoneNumber" class="form-control" th:value="${owner.phoneNumber}" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label" for="email">Email</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input type="email" id="email" class="form-control" th:value="${owner.email}" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-12 col-md-2 col-form-label">Trạng thái</label>
+                        <div class="col-sm-12 col-md-10">
+                            <input type="text" class="form-control" th:value="${owner.status == 1 ? 'Kích hoạt' : 'Khóa'}" disabled/>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-12 col-md-10 offset-md-2">
+                            <a th:href="@{/recep/owners}" class="btn btn-secondary">Quay lại</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pd-20">
+                    <h4 class="text-blue h4">Xe của chủ xe</h4>
+                </div>
+                <div class="pb-20">
+                    <table class="data-table table stripe hover nowrap">
+                        <thead>
+                        <tr>
+                            <th class="table-plus datatable-nosort">ID</th>
+                            <th>Ảnh</th>
+                            <th>Model</th>
+                            <th>Biển số xe</th>
+                            <th>Năm sản xuất</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="vehicle : ${owner.vehicles}">
+                            <td th:text="${vehicle.id}"></td>
+                            <td th:text="${vehicle.model}"></td>
+                            <td th:text="${vehicle.licensePlate}"></td>
+                            <td th:text="${vehicle.year}"></td>
+                            <td><img th:src="@{${vehicle.img}}" alt="Vehicle Image" style="width: 50px; height: 50px;"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </th:block>
+</th:block>
+</body>
+</html>

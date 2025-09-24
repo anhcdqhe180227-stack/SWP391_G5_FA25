@@ -39,6 +39,13 @@ public class OwnerEntity extends AbstractEntity {
     @JsonManagedReference
     private Set<VehicleEntity> vehicles;
 
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonManagedReference
+    private Set<AppointmentEntity> appointments;
+
+
     public String getFirstName() {
         return firstName;
     }
@@ -93,5 +100,13 @@ public class OwnerEntity extends AbstractEntity {
 
     public void setVehicles(Set<VehicleEntity> vehicles) {
         this.vehicles = vehicles;
+    }
+
+    public Set<AppointmentEntity> getAppointments() {
+        return appointments;
+    }
+
+    public void setAppointments(Set<AppointmentEntity> appointments) {
+        this.appointments = appointments;
     }
 }
