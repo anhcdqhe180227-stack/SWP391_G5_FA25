@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <title>CarCare</title>
+</head>
+
+<body>
+
+<th:block th:replace="layout/user-layout :: layout">
+    <th:block th:fragment="pageContent">
+
+        <div class="container-fluid page-header mb-5 p-0"
+             th:style="'background-image: url(@{/assets/img/carousel-bg-2.jpg})'">
+            <div class="container-fluid page-header-inner py-5">
+                <div class="container text-center">
+                    <h1 class="display-3 text-white mb-3 animated slideInDown">Đặt Lịch</h1>
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb justify-content-center text-uppercase">
+                            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                            <li class="breadcrumb-item text-white active" aria-current="page">Đặt Lịch</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${param.success}" class="alert alert-success" role="alert">
+            Đặt lịch thành công!
+        </div>
+
+        <div th:if="${param.duplicate}" class="alert alert-danger" role="alert">
+            Bạn đã đặt lịch trong ngày này rồi. Vui lòng chọn ngày khác!
+        </div>
+
+        <div class="container-fluid bg-secondary booking my-5 wow fadeInUp" data-wow-delay="0.1s">
+            <div class="container">
+                <div class="row gx-5">
+                    <div class="col-lg-6 py-5">
+                        <div class="py-5">
+                            <h1 class="text-white mb-4">Dịch Vụ Sửa Chữa Ô Tô Chuyên Nghiệp</h1>
+                            <p class="text-white mb-0">Với nhiều năm kinh nghiệm trong ngành sửa chữa ô tô, chúng tôi
+                                cam kết mang đến cho khách hàng dịch vụ chất lượng và hiệu quả nhất. Từ việc chẩn đoán,
+                                bảo dưỡng đến sửa chữa động cơ, hệ thống truyền động hay thay thế phụ tùng, đội ngũ kỹ
+                                thuật viên giàu kinh nghiệm của chúng tôi sẽ giúp chiếc xe của bạn vận hành mượt mà và
+                                bền bỉ hơn bao giờ hết. Chúng tôi luôn sử dụng các thiết bị hiện đại và phụ tùng chính
+                                hãng để đảm bảo chất lượng dịch vụ. Dù xe bạn gặp phải vấn đề gì, chúng tôi đều có giải
+                                pháp tối ưu để khắc phục nhanh chóng, an toàn và tiết kiệm chi phí.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="bg-primary h-100 d-flex flex-column justify-content-center text-center p-5 wow zoomIn"
+                             data-wow-delay="0.6s">
+                            <h1 class="text-white mb-4">Đặt Lịch Dịch Vụ</h1>
+                            <form th:action="@{/owner/appointments/save}" method="post">
+                                <div class="row g-3">
+                                    <div class="col-12 col-sm-6">
+                                        <input type="text" class="form-control border-0" name="name"
+                                               placeholder="Tên Của Bạn"
+                                               th:value="${owner.firstName + ' ' + owner.lastName}"
+                                               style="height: 55px;">
+                                    </div>
+                                    <div class="col-12 col-sm-6">
+                                        <input type="email" class="form-control border-0" placeholder="Email Của Bạn"
+                                               name="email" th:value="${owner.user.email}"
+                                               style="height: 55px;">
+                                    </div>
+
+                                    <div class="col-12 col-sm-6">
+                                        <input type="text" class="form-control border-0" placeholder="Email Của Bạn"
+                                               name="phone" th:value="${owner.phoneNumber}"
+                                               style="height: 55px;">
+                                    </div>
+
+                                    <div class="col-12 col-sm-6">
+                                        <div class="date" id="date1" data-target-input="nearest">
+                                            <input type="text" class="form-control border-0 datetimepicker-input"
+                                                   name="date"
+                                                   placeholder="Ngày Dịch Vụ" data-target="#date1"
+                                                   data-toggle="datetimepicker"
+                                                   style="height: 55px;">
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                <textarea class="form-control border-0" name="reason"
+                                          placeholder="Yêu Cầu/Lý Do"></textarea>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-secondary w-100 py-3" type="submit">Đặt Lịch</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </th:block>
+</th:block>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script th:src="@{/assets/lib/wow/wow.min.js}"></script>
+<script th:src="@{/assets/lib/easing/easing.min.js}"></script>
+<script th:src="@{/assets/lib/waypoints/waypoints.min.js}"></script>
+<script th:src="@{/assets/lib/counterup/counterup.min.js}"></script>
+<script th:src="@{/assets/lib/owlcarousel/owl.carousel.min.js}"></script>
+<script th:src="@{/assets/lib/tempusdominus/js/moment.min.js}"></script>
+<script th:src="@{/assets/lib/tempusdominus/js/moment-timezone.min.js}"></script>
+<script th:src="@{/assets/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js}"></script>
+
+<!-- Template Javascript -->
+<script th:src="@{/assets/js/main.js}"></script>
+</body>
+
+</html>

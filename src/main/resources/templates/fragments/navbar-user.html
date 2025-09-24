@@ -11,6 +11,7 @@
                 <a th:href="@{/}" class="nav-item nav-link" th:classappend="${currentUri == '/' ? 'active' : ''}">Trang chủ</a>
                 <a th:href="@{/about}" class="nav-item nav-link" th:classappend="${currentUri == '/about' ? 'active' : ''}">Về chúng tôi</a>
                 <a th:href="@{/service}" class="nav-item nav-link" th:classappend="${currentUri == '/service' ? 'active' : ''}">Dịch vụ</a>
+                <a th:href="@{/owner/appointments}" class="nav-item nav-link" th:classappend="${currentUri == '/owner/appointments' ? 'active' : ''}">Đặt lịch</a>
 
                 <th:block th:unless="${#authorization.expression('isAnonymous()')}">
                     <a th:href="@{/owner/vehicles}" class="nav-item nav-link" th:classappend="${currentUri == '/owner/vehicles' ? 'active' : ''}">Xe của tôi</a>
