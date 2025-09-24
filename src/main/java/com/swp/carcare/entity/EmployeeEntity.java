@@ -30,6 +30,12 @@ public class EmployeeEntity extends AbstractEntity {
     @JsonBackReference
     private UserEntity user;
 
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    @JsonManagedReference
+    private Set<ShiftEntity> shifts;
+
     public String getFullName() {
         return fullName;
     }
@@ -68,5 +74,13 @@ public class EmployeeEntity extends AbstractEntity {
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public Set<ShiftEntity> getShifts() {
+        return shifts;
+    }
+
+    public void setShifts(Set<ShiftEntity> shifts) {
+        this.shifts = shifts;
     }
 }
