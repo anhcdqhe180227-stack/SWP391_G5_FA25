@@ -32,7 +32,6 @@ public class RecepHomeController {
         List<AppointmentEntity> appointments = appointmentRepository.findAll();
         model.addAttribute("appointments", appointments);
         model.addAttribute("appointmentCount", appointmentRepository.count());
-        model.addAttribute("appointmentCount", appointmentRepository.count());
         model.addAttribute("employeeCount", employeeRepository.count());
         model.addAttribute("ownerCount", ownerRepository.count());
         return "recep/dashboard";

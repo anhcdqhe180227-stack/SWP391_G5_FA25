@@ -105,7 +105,7 @@ public class EmployeeShiftController {
         List<Map<String, Object>> result = new java.util.ArrayList<>();
         for (ShiftEntity shift : allShiftsInMonth) {
             Map<String, Object> map = new java.util.HashMap<>();
-            map.put("title", "Ca trực");
+            map.put("title", "Ca làm");
             map.put("start", shift.getStartTime().toString());
             map.put("end", shift.getEndTime().toString());
             map.put("color", "#b39ddb");

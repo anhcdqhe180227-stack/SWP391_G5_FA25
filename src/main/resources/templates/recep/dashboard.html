@@ -153,7 +153,7 @@
                         <th class="table-plus">Tên khách hàng</th>
                         <th>Giới tính</th>
                         <th>Phụ trách</th>
-                        <th>Ngày sửa</th>
+                        <th>Ngày hẹn</th>
                         <th>Lý do</th>
                     </tr>
                     </thead>
@@ -169,7 +169,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td th:text="${appointment.owner.gender}"></td>
+                        <td th:text="${appointment.owner.gender == 'male' ? 'Nam' : 'Nữ'}"></td>
                         <td th:text="${appointment.employee != null ? appointment.employee.fullName : 'Chưa có thông tin'}"></td>
 
                         <td th:text="${#temporals.format(appointment.appointmentDateTime, 'dd MMM yyyy')}"></td>

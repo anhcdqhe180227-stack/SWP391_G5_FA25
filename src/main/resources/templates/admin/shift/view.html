@@ -153,7 +153,7 @@
 
             if (event) {
                 // Edit mode - hiện nút xóa
-                document.getElementById('modalTitle').textContent = 'Chỉnh sửa ca trực';
+                document.getElementById('modalTitle').textContent = 'Chỉnh sửa ca làm';
                 document.getElementById('shiftId').value = event.id;
                 document.getElementById('shiftDate').value = event.start.toISOString();
                 document.getElementById('fixedTime').value = event.extendedProps.fixedTime;
@@ -161,12 +161,12 @@
                 deleteBtn.style.display = 'inline-block';
 
                 deleteBtn.onclick = function() {
-                    if (confirm('Bạn có muốn xóa ca trực này không?')) {
+                    if (confirm('Bạn có muốn xóa ca làm này không?')) {
                         deleteShift(event.id);
                     }
                 };
             } else {
-                document.getElementById('modalTitle').textContent = 'Thêm ca trực';
+                document.getElementById('modalTitle').textContent = 'Thêm ca làm';
                 document.getElementById('shiftId').value = '';
                 document.getElementById('shiftDate').value = selectedDate;
                 deleteBtn.style.display = 'none';
