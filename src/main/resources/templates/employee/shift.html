@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" th:fragment="layout" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Ca làm của tôi</title>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet"/>
+</head>
+<body>
+
+<th:block th:replace="layout/employee-layout :: layout">
+    <th:block th:fragment="pageContent">
+        <div class="min-height-200px">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <div class="title">
+                            <h4>Ca làm của tôi</h4>
+                        </div>
+                        <nav aria-label="breadcrumb" role="navigation">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item">
+                                    <a th:href="@{/admin/dashboard}">Quản trị</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">
+                                    Ca làm của tôi
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-box mb-30">
+                <div class="pd-20">
+                    <h4 class="text-blue h4">Ca làm của tôi</h4>
+                </div>
+                <div class="pb-20">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+
+        </div>
+    </th:block>
+</th:block>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+
+        function formatTime(date) {
+            return moment(date).format('h:mm A');
+        }
+
+        fetch('/employee/shift/calendar')
+            .then(res => res.json())
+            .then(shifts => {
+                const events = shifts.map(shift => ({
+                    title: shift.title || 'Ca làm',
+                    start: shift.start,
+                    end: shift.end,
+                    color: shift.color || '#b39ddb',
+                    description: `${formatTime(shift.start)} - ${formatTime(shift.end)}`
+                }));
+
+                new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    events: events,
+                    eventRender: function(info) {
+                        info.el.setAttribute('title', info.event.extendedProps.description);
+                    }
+                }).render();
+            })
+            .catch(error => console.error('Error loading shifts data:', error));
+    });
+</script>
+
+
+</body>
+</html>
