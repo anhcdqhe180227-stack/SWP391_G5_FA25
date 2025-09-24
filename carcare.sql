@@ -18,6 +18,41 @@ USE `carcare`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `appointments`
+--
+
+DROP TABLE IF EXISTS `appointments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `appointments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_date_time` datetime(6) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `modified_date_time` datetime(6) DEFAULT NULL,
+  `updated_by` varchar(255) DEFAULT NULL,
+  `appointment_date_time` datetime(6) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(255) DEFAULT NULL,
+  `reason` varchar(255) DEFAULT NULL,
+  `emp_id` int DEFAULT NULL,
+  `owner_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `appointments`
+--
+
+LOCK TABLES `appointments` WRITE;
+/*!40000 ALTER TABLE `appointments` DISABLE KEYS */;
+INSERT INTO `appointments` VALUES (1,'2025-09-24 00:00:00.000000','chuyendizz@gmail.com',1,'2025-09-24 00:00:00.000000','chuyendizz@gmail.com','2025-09-25 00:00:00.000000','chuyendizz@gmail.com','Nguyễn Đức','0987612345','Cần thay lốp xe mới',1,1),(2,'2025-09-24 00:00:00.000000','chuyendizz@gmail.com',1,'2025-09-24 00:00:00.000000','chuyendizz@gmail.com','2025-09-26 00:00:00.000000','chuyendizz@gmail.com','Nguyễn Đức','0987612345','Cần thay dầu cho xe',1,1),(3,NULL,NULL,-1,NULL,NULL,'2025-09-26 17:00:00.000000','chuyendizz@gmail.com','Nguyễn Đức Anh','0987612345','Xe tôi nổ lốp',NULL,1);
+/*!40000 ALTER TABLE `appointments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `employee`
 --
 
@@ -151,10 +186,21 @@ DROP TABLE IF EXISTS `recep`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `recep` (
-  `recep_id` int NOT NULL,
-  PRIMARY KEY (`recep_id`),
-  CONSTRAINT `recep_ibfk_1` FOREIGN KEY (`recep_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_date_time` datetime(6) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `modified_date_time` datetime(6) DEFAULT NULL,
+  `updated_by` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `full_name` varchar(255) DEFAULT NULL,
+  `gender` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `user_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKn0kk5qcf1ych6bmj75f15nh47` (`user_id`),
+  CONSTRAINT `FKn0kk5qcf1ych6bmj75f15nh47` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -163,7 +209,40 @@ CREATE TABLE `recep` (
 
 LOCK TABLES `recep` WRITE;
 /*!40000 ALTER TABLE `recep` DISABLE KEYS */;
+INSERT INTO `recep` VALUES (1,NULL,NULL,1,NULL,NULL,'Lễ tân','Oanh Lê','female',NULL,5);
 /*!40000 ALTER TABLE `recep` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `shifts`
+--
+
+DROP TABLE IF EXISTS `shifts`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `shifts` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `created_date_time` datetime(6) DEFAULT NULL,
+  `created_by` varchar(255) DEFAULT NULL,
+  `status` int DEFAULT NULL,
+  `modified_date_time` datetime(6) DEFAULT NULL,
+  `updated_by` varchar(255) DEFAULT NULL,
+  `description` varchar(255) DEFAULT NULL,
+  `end_time` datetime(6) NOT NULL,
+  `start_time` datetime(6) NOT NULL,
+  `employee_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `shifts`
+--
+
+LOCK TABLES `shifts` WRITE;
+/*!40000 ALTER TABLE `shifts` DISABLE KEYS */;
+INSERT INTO `shifts` VALUES (1,NULL,NULL,NULL,NULL,NULL,NULL,'2025-09-24 04:00:00.000000','2025-09-24 00:00:00.000000',1),(2,NULL,NULL,NULL,NULL,NULL,NULL,'2025-09-24 10:00:00.000000','2025-09-24 06:00:00.000000',2);
+/*!40000 ALTER TABLE `shifts` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -184,6 +263,7 @@ CREATE TABLE `users` (
   `updated_by` varchar(255) DEFAULT NULL,
   `password` varchar(120) NOT NULL,
   `role` int DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `UK6dotkott2kjsp8vw4d0m25fb7` (`email`)
@@ -196,7 +276,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'admin@gmail.com','2025-09-21 14:09:24',NULL,NULL,1,NULL,NULL,'$2a$12$9R74XDYsxPq7i1IowWBrFOsglePyiU0ZRjyQuhYc.N5xzuWMrsnOa',0),(2,'owner@gmail.com','2025-09-21 14:09:24',NULL,NULL,1,NULL,NULL,'$2a$12$9R74XDYsxPq7i1IowWBrFOsglePyiU0ZRjyQuhYc.N5xzuWMrsnOa',1),(3,'emp@gmail.com','2025-09-21 14:09:24',NULL,NULL,1,NULL,NULL,'$2a$12$9R74XDYsxPq7i1IowWBrFOsglePyiU0ZRjyQuhYc.N5xzuWMrsnOa',2),(4,'recep@gmail.com','2025-09-21 14:09:24',NULL,NULL,1,NULL,NULL,'$2a$12$9R74XDYsxPq7i1IowWBrFOsglePyiU0ZRjyQuhYc.N5xzuWMrsnOa',3),(5,'caoquanganh@gmail.com','2025-09-23 01:58:45',NULL,NULL,1,NULL,NULL,'$2a$10$XfwLqdJ9jlXl2BRmgbo74uorr2r4nTRkTcKVwi3OHfA3l1NJLLCWG',2),(6,'quanganh@gmail.com','2025-09-23 02:04:42',NULL,NULL,1,NULL,NULL,'$2a$10$hjMNZva9hbGiOs9jm5KqyulQVj4Jo29iVhCiflvW1YJxOOVkrdUKm',2),(7,'oanhle@gmail.com','2025-09-23 02:41:14',NULL,NULL,1,NULL,NULL,'$2a$10$QeAg16nkOdd9s6WY7PaSiuQdi7WXpnoCnIa0D7b2sUukPBgeahvPO',2),(8,'chuyendizz@gmail.com','2025-09-23 07:21:26',NULL,NULL,1,NULL,NULL,'$2a$10$REvArt/bBVp3Eogbcnu77uEQMO6xgzkvplntnC41nlgPUwxbZVNC2',1);
+INSERT INTO `users` VALUES (1,'admin@gmail.com','2025-09-21 14:09:24',NULL,NULL,1,NULL,NULL,'$2a$12$9R74XDYsxPq7i1IowWBrFOsglePyiU0ZRjyQuhYc.N5xzuWMrsnOa',0,'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg'),(2,'owner@gmail.com','2025-09-21 14:09:24',NULL,NULL,1,NULL,NULL,'$2a$12$9R74XDYsxPq7i1IowWBrFOsglePyiU0ZRjyQuhYc.N5xzuWMrsnOa',1,'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg'),(3,'emp@gmail.com','2025-09-21 14:09:24',NULL,NULL,1,NULL,NULL,'$2a$12$9R74XDYsxPq7i1IowWBrFOsglePyiU0ZRjyQuhYc.N5xzuWMrsnOa',2,'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg'),(4,'recep@gmail.com','2025-09-21 14:09:24',NULL,NULL,1,NULL,NULL,'$2a$12$9R74XDYsxPq7i1IowWBrFOsglePyiU0ZRjyQuhYc.N5xzuWMrsnOa',3,'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg'),(5,'letan@gmail.com','2025-09-23 01:58:45',NULL,NULL,1,NULL,NULL,'$2a$10$REvArt/bBVp3Eogbcnu77uEQMO6xgzkvplntnC41nlgPUwxbZVNC2',3,'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg'),(6,'quanganh@gmail.com','2025-09-23 02:04:42',NULL,NULL,1,NULL,NULL,'$2a$10$hjMNZva9hbGiOs9jm5KqyulQVj4Jo29iVhCiflvW1YJxOOVkrdUKm',2,'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg'),(7,'oanhle@gmail.com','2025-09-23 02:41:14',NULL,NULL,1,NULL,NULL,'$2a$10$QeAg16nkOdd9s6WY7PaSiuQdi7WXpnoCnIa0D7b2sUukPBgeahvPO',2,'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg'),(8,'chuyendizz@gmail.com','2025-09-23 07:21:26',NULL,NULL,1,NULL,NULL,'$2a$10$REvArt/bBVp3Eogbcnu77uEQMO6xgzkvplntnC41nlgPUwxbZVNC2',1,'https://static.vecteezy.com/system/resources/previews/002/002/403/non_2x/man-with-beard-avatar-character-isolated-icon-free-vector.jpg');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -252,4 +332,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-24  9:29:04
+-- Dump completed on 2025-09-24 17:19:38
