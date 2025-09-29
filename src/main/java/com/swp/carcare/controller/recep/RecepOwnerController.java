@@ -5,7 +5,6 @@ import com.swp.carcare.dto.VehicleDto;
 import com.swp.carcare.entity.OwnerEntity;
 import com.swp.carcare.entity.VehicleEntity;
 import com.swp.carcare.repository.OwnerRepository;
-import com.swp.carcare.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

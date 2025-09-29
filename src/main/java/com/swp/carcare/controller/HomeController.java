@@ -39,8 +39,7 @@ public class HomeController {
     @GetMapping("/about")
     private String about(Model model, HttpServletRequest request) {
         model.addAttribute("currentUri", request.getRequestURI());
-
-       return "about";
+        return "about";
     }
 
     @GetMapping("/service")

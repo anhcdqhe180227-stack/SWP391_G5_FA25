@@ -1,7 +1,6 @@
 package com.swp.carcare.controller.admin;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import com.swp.carcare.dto.EmployeeDto;
 import com.swp.carcare.entity.EmployeeEntity;
@@ -9,12 +8,6 @@ import com.swp.carcare.entity.UserEntity;
 import com.swp.carcare.repository.EmployeeRepository;
 import com.swp.carcare.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
