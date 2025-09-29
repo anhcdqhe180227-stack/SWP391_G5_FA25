@@ -2,7 +2,7 @@ package com.swp.carcare.controller.employee;
 
 import com.swp.carcare.entity.EmployeeEntity;
 import com.swp.carcare.entity.ShiftEntity;
-import com.swp.carcare.service.EmployeeShiftService;
+import com.swp.carcare.service.ShiftService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class EmployeeShiftController {
 
     @Autowired
-    private EmployeeShiftService employeeShiftService;
+    private ShiftService shiftService;
 
     @GetMapping
     public String listShifts(Model model,
@@ -28,15 +28,15 @@ public class EmployeeShiftController {
                              @RequestParam(defaultValue = "0") int page) {
 
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        EmployeeEntity employee = employeeShiftService.getEmployeeFromAuthenticatedUser(username);
+        EmployeeEntity employee = shiftService.getEmployeeFromAuthenticatedUser(username);
         if (employee == null) {
             return "redirect:/employee/dashboard";
         }
 
         Pageable pageable = PageRequest.of(page, 5);
-        Page<ShiftEntity> shifts = employeeShiftService.getShiftsForEmployee(employee, pageable, date);
+        Page<ShiftEntity> shifts = shiftService.getShiftsForEmployee(employee, pageable, date);
 
-        List<Map<String, Object>> shiftSummaryByDay = employeeShiftService.getShiftSummaryForMonth(employee);
+        List<Map<String, Object>> shiftSummaryByDay = shiftService.getShiftSummaryForMonth(employee);
 
         model.addAttribute("shiftSummaryByDay", shiftSummaryByDay);
         model.addAttribute("shifts", shifts.getContent());
@@ -51,10 +51,10 @@ public class EmployeeShiftController {
     @ResponseBody
     public List<Map<String, Object>> getShiftsForCalendar() {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
-        EmployeeEntity employee = employeeShiftService.getEmployeeFromAuthenticatedUser(username);
+        EmployeeEntity employee = shiftService.getEmployeeFromAuthenticatedUser(username);
         if (employee == null) {
             return List.of();
         }
-        return employeeShiftService.getShiftsForCalendar(employee);
+        return shiftService.getShiftsForCalendar(employee);
     }
 }
