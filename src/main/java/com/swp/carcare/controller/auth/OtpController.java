@@ -6,6 +6,7 @@ import com.swp.carcare.entity.UserEntity;
 import com.swp.carcare.repository.OwnerRepository;
 import com.swp.carcare.repository.UserRepository;
 import com.swp.carcare.service.EmailSenderService;
+import com.swp.carcare.service.OtpService;
 import com.swp.carcare.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class OtpController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private OtpService otpService;
+
     @RequestMapping(value = "otp-check", method = RequestMethod.GET)
     public String indexOtp() {
         return "auth/otpConfirm";
@@ -42,49 +46,20 @@ public class OtpController {
 
     @RequestMapping(value = "confirm-otp", method = RequestMethod.POST)
     public String checkOtp(HttpSession session, @RequestParam("otp") String otp, Model model, RedirectAttributes redirectAttributes) {
-        String otpRegister = (String) session.getAttribute("otp-register");
-        if (otp.equals(otpRegister)) {
-            UserEntity userEntity = new UserEntity();
-            userEntity.setEmail((String) session.getAttribute("email"));
-            userEntity.setPassword(passwordEncoder.encode((String) session.getAttribute("password")));
-            userEntity.setStatus(1);
+        boolean isOtpValid = otpService.verifyOtpAndCreateUser(session, otp);
 
-            userEntity.setRole(1);
-
-            userEntity.setCreatedAt(LocalDateTime.now());
-            userEntity.setUpdatedAt(LocalDateTime.now());
-            userEntity.setCreatedBy("ADMIN");
-            userEntity.setUpdatedBy("ADMIN");
-
-            UserEntity save = userService.saveUser(userEntity);
-
-            OwnerEntity owner = new OwnerEntity();
-            owner.setUser(save);
-            owner.setStatus(1);
-
-            owner.setPhoneNumber((String) session.getAttribute("phone"));
-            owner.setFirstName((String) session.getAttribute("firstName"));
-            owner.setLastName((String) session.getAttribute("lastName"));
-            owner.setAddress((String) session.getAttribute("address"));
-            owner.setCreatedAt(LocalDateTime.now());
-            owner.setUpdatedAt(LocalDateTime.now());
-            owner.setCreatedBy("ADMIN");
-            owner.setUpdatedBy("ADMIN");
-
-            owner.setGender((String) session.getAttribute("gender"));
-
-            ownerRepository.save(owner);
-
+        if (isOtpValid) {
             redirectAttributes.addFlashAttribute("registrationSuccess", true);
-            redirectAttributes.addFlashAttribute("userFullName", owner.getFirstName() + " " + owner.getLastName());
-            redirectAttributes.addFlashAttribute("userEmail", userEntity.getEmail());
-            redirectAttributes.addFlashAttribute("userPhone", owner.getPhoneNumber());
-            redirectAttributes.addFlashAttribute("userGender", owner.getGender().equals("male") ? "Nam" : "Nữ");
-            redirectAttributes.addFlashAttribute("userAddress", owner.getAddress());
+            redirectAttributes.addFlashAttribute("userFullName", session.getAttribute("firstName") + " " + session.getAttribute("lastName"));
+            redirectAttributes.addFlashAttribute("userEmail", session.getAttribute("email"));
+            redirectAttributes.addFlashAttribute("userPhone", session.getAttribute("phone"));
+            redirectAttributes.addFlashAttribute("userGender", session.getAttribute("gender").equals("male") ? "Nam" : "Nữ");
+            redirectAttributes.addFlashAttribute("userAddress", session.getAttribute("address"));
 
             return "redirect:/";
         }
-        model.addAttribute("mess", "OTP không chính xác! Hãy check lại email của bạn");
+
+        model.addAttribute("mess", "OTP không chính xác! Hãy kiểm tra lại email của bạn.");
         return "auth/otpConfirm";
     }
 
