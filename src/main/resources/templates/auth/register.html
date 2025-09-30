@@ -454,25 +454,18 @@
 
 
 </script>
-
 <script>
     const rePasswordInput = document.getElementById('rePassword');
     const rePasswordError = document.getElementById('rePasswordError');
+    const form = document.querySelector('form');
 
-    rePasswordInput.addEventListener('input', function () {
-        const password = passwordInput.value;
-        const rePassword = rePasswordInput.value;
+    passwordInput.addEventListener('input', validatePasswordMatch);
+    rePasswordInput.addEventListener('input', validatePasswordMatch);
 
-        if (rePassword === "") {
-            rePasswordError.textContent = "Vui lòng nhập lại mật khẩu.";
-        } else if (password !== rePassword) {
-            rePasswordError.textContent = "Mật khẩu nhập lại không khớp.";
-        } else {
-            rePasswordError.textContent = "";
-        }
-    });
+    passwordInput.addEventListener('blur', validatePasswordMatch);
+    rePasswordInput.addEventListener('blur', validatePasswordMatch);
 
-    rePasswordInput.addEventListener('blur', function () {
+    function validatePasswordMatch() {
         const password = passwordInput.value.trim();
         const rePassword = rePasswordInput.value.trim();
 
@@ -483,16 +476,15 @@
         } else {
             rePasswordError.textContent = "";
         }
-    });
+    }
 
-    passwordInput.addEventListener('input', function () {
-        const password = passwordInput.value;
-        const rePassword = rePasswordInput.value;
+    form.addEventListener('submit', function(event) {
+        const password = passwordInput.value.trim();
+        const rePassword = rePasswordInput.value.trim();
 
-        if (rePassword && password !== rePassword) {
+        if (password !== rePassword) {
+            event.preventDefault();
             rePasswordError.textContent = "Mật khẩu nhập lại không khớp.";
-        } else {
-            rePasswordError.textContent = "";
         }
     });
 </script>
