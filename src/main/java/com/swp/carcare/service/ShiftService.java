@@ -8,11 +8,13 @@ import com.swp.carcare.repository.ShiftRepository;
 import com.swp.carcare.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,6 +91,55 @@ public class ShiftService {
             map.put("color", "#b39ddb");
             return map;
         }).collect(Collectors.toList());
+    }
+
+    public Page<ShiftEntity> getShifts(Integer empId, String date, int page) {
+        Pageable pageable = PageRequest.of(page, 10);
+
+        if (empId != null) {
+            return shiftRepository.findByEmployeeId(empId, pageable);
+        } else if (date != null && !date.isEmpty()) {
+            LocalDate localDate = LocalDate.parse(date);
+            LocalDateTime startOfDay = localDate.atStartOfDay();
+            LocalDateTime endOfDay = localDate.atTime(23, 59, 59);
+            return shiftRepository.findByStartTimeBetween(startOfDay, endOfDay, pageable);
+        } else {
+            return shiftRepository.findAll(pageable);
+        }
+    }
+
+    public String saveShift(Integer id, String rawDate, String fixedTime, Integer empId) {
+        String onlyDate = rawDate.split("T")[0];
+        LocalDate date = LocalDate.parse(onlyDate);
+
+        LocalTime startTime = fixedTime.equals("MORNING") ? LocalTime.of(7, 0) : LocalTime.of(13, 0);
+        LocalTime endTime = fixedTime.equals("MORNING") ? LocalTime.of(11, 0) : LocalTime.of(17, 0);
+
+        LocalDateTime shiftStart = LocalDateTime.of(date, startTime);
+        LocalDateTime shiftEnd = LocalDateTime.of(date, endTime);
+
+        List<ShiftEntity> conflicts = shiftRepository.findConflictingShifts(empId, shiftStart, shiftEnd, id);
+        if (!conflicts.isEmpty()) {
+            return "Đã tồn tại ca làm trùng thời gian cho nhân viên";
+        }
+
+        ShiftEntity shift = id != null ? shiftRepository.findById(id).orElse(new ShiftEntity()) : new ShiftEntity();
+        shift.setStartTime(shiftStart);
+        shift.setEndTime(shiftEnd);
+
+        if (empId != null) {
+            EmployeeEntity employee = employeeRepository.findById(empId).orElse(null);
+            shift.setEmployee(employee);
+        } else {
+            shift.setEmployee(null);
+        }
+
+        shiftRepository.save(shift);
+        return "Lưu thành công";
+    }
+
+    public void deleteShift(Integer id) {
+        shiftRepository.deleteById(id);
     }
 
 }
