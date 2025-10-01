@@ -27,7 +27,6 @@ public class ShiftEntity extends AbstractEntity {
     @JsonBackReference
     private EmployeeEntity employee;
 
-
     public LocalDateTime getStartTime() {
         return startTime;
     }
