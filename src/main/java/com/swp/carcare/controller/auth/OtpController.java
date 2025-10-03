@@ -25,18 +25,6 @@ import java.time.LocalDateTime;
 
 public class OtpController {
     @Autowired
-    private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private EmailSenderService emailSenderService;
-    @Autowired
-    private OwnerRepository ownerRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private OtpService otpService;
 
     @RequestMapping(value = "otp-check", method = RequestMethod.GET)
@@ -62,11 +50,4 @@ public class OtpController {
         model.addAttribute("mess", "OTP không chính xác! Hãy kiểm tra lại email của bạn.");
         return "auth/otpConfirm";
     }
-
-    public String otpCode() {
-        int code = (int) Math.floor(((Math.random() * 899999) + 100000));
-        return String.valueOf(code);
-    }
-
-
 }

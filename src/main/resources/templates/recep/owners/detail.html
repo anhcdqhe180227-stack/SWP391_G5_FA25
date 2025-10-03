@@ -105,10 +105,10 @@
                         <tbody>
                         <tr th:each="vehicle : ${owner.vehicles}">
                             <td th:text="${vehicle.id}"></td>
+                            <td><img th:src="@{${vehicle.img}}" alt="Vehicle Image" style="width: 50px; height: 50px;"/></td>
                             <td th:text="${vehicle.model}"></td>
                             <td th:text="${vehicle.licensePlate}"></td>
                             <td th:text="${vehicle.year}"></td>
-                            <td><img th:src="@{${vehicle.img}}" alt="Vehicle Image" style="width: 50px; height: 50px;"/></td>
                         </tr>
                         </tbody>
                     </table>
